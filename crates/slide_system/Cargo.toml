@@ -1,0 +1,8 @@
+[package]
+name = "slide_system"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { workspace = true }
+grounded_plugin = { workspace = true }

@@ -1,0 +1,57 @@
+[package]
+name = "bevyfps"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { workspace = true }
+bevy_dylib = { workspace = true }
+animation_plugin = { workspace = true }
+avian2d = { workspace = true }
+grounded_plugin = { workspace = true }
+slide_system = { workspace = true }
+attack_plugin = { workspace = true }
+bevy-inspector-egui = { workspace = true }
+
+[workspace.dependencies]
+bevy = { version = "0.15", features = [
+    "default_font",
+    "wayland",
+    "dynamic_linking",
+] }
+bevy_dylib = "*"
+animation_plugin = { path = "crates/animation_plugin" }
+grounded_plugin = { path = "crates/grounded_plugin" }
+slide_system = { path = "crates/slide_system" }
+attack_plugin = { path = "crates/attack_plugin" }
+avian2d = { git = "https://github.com/Jondolf/avian", branch = "main", features = [
+    "simd",
+    "parallel",
+    "parry-f32",
+] }
+bevy-inspector-egui = "*"
+
+[workspace]
+members = [
+    "crates/animation_plugin",
+    "crates/attack_plugin",
+    "crates/grounded_plugin",
+    "crates/grounded_plugin",
+    "crates/slide_system",
+]
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
+incremental = false
+debug = false
+
+[profile.release.package."*"]
+opt-level = 3
+codegen-units = 1
+incremental = false
+debug = false
