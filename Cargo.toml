@@ -20,10 +20,12 @@ jump_plugin = { workspace = true }
 
 
 [workspace.dependencies]
-bevy = { version = "0.15", features = [
+bevy = { version = "*", features = [
     "default_font",
     "wayland",
     "dynamic_linking",
+    "file_watcher",
+    "embedded_watcher",
 ] }
 bevy_dylib = "*"
 animation_plugin = { path = "crates/animation_plugin" }

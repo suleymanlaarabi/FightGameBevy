@@ -5,7 +5,10 @@ use bevy::prelude::*;
 use game_ui::GameMenuPlugin;
 use main_menu::MainMenuPlugin;
 
-use crate::GameState;
+use crate::{
+    world::{component::WorldSpawnRequest, WorldMaps},
+    GameState,
+};
 pub mod game_ui;
 pub mod main_menu;
 pub mod settings;
@@ -39,6 +42,15 @@ fn insert_system(world: &mut World) {
         "on_click_play".into(),
         world.register_system(|mut state: ResMut<NextState<GameState>>| {
             state.set(GameState::InFight);
+        }),
+    );
+    map.insert(
+        "refresh_maps".into(),
+        world.register_system(|world: &mut World| {
+            let new = WorldMaps::from_world(world);
+            let mut res = world.resource_mut::<WorldMaps>();
+            res.0 = new.0;
+            world.spawn(WorldSpawnRequest(0));
         }),
     );
     world.insert_resource(map);

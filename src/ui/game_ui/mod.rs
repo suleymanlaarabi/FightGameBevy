@@ -92,6 +92,15 @@ fn spawn_menu(mut commands: Commands) {
                 .with_children(|parent| {
                     parent.spawn(Text::new("Exit"));
                 });
+            parent
+                .spawn(GameButton::with_size_func(
+                    Val::Px(50.),
+                    Val::Px(120.),
+                    "refresh_maps",
+                ))
+                .with_children(|parent| {
+                    parent.spawn(Text::new("Refresh"));
+                });
         });
 }
 

@@ -42,6 +42,10 @@ fn main() {
                     }),
                     ..default()
                 })
+                .set(AssetPlugin {
+                    watch_for_changes_override: Some(true),
+                    ..default()
+                })
                 .set(ImagePlugin::default_nearest()),
             PhysicsPlugins::default(),
             //PhysicsDebugPlugin::default(),

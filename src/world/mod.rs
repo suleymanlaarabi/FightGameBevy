@@ -11,7 +11,7 @@ pub struct WorldPlugin;
 
 pub type WorldMap = (Handle<Image>, Vec<MapCollision>);
 
-#[derive(Deref, DerefMut, Resource)]
+#[derive(Deref, DerefMut, Resource, TypePath, Asset)]
 pub struct WorldMaps(pub Vec<WorldMap>);
 
 impl FromWorld for WorldMaps {
@@ -35,6 +35,6 @@ impl Plugin for WorldPlugin {
         let maps = WorldMaps::from_world(world);
         app.insert_resource(maps);
         app.add_systems(PostStartup, spawn_world)
-            .add_systems(FixedPostUpdate, world_spawn_handle);
+            .add_systems(FixedUpdate, world_spawn_handle);
     }
 }
