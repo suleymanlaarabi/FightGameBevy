@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 bevy = { workspace = true }
 grounded_plugin = { workspace = true }
+avian2d = { workspace = true }

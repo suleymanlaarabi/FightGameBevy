@@ -11,7 +11,10 @@ avian2d = { workspace = true }
 grounded_plugin = { workspace = true }
 slide_system = { workspace = true }
 attack_plugin = { workspace = true }
-bevy-inspector-egui = { workspace = true }
+serde = { workspace = true }
+rand = { workspace = true }
+bincode = { workspace = true }
+game_ui = { workspace = true }
 
 [workspace.dependencies]
 bevy = { version = "0.15", features = [
@@ -29,15 +32,20 @@ avian2d = { git = "https://github.com/Jondolf/avian", branch = "main", features 
     "parallel",
     "parry-f32",
 ] }
-bevy-inspector-egui = "*"
+serde = { version = "1.0.216", features = ["derive"] }
+bincode = "*"
+rand = "*"
+game_ui = { path = "crates/game_ui" }
 
 [workspace]
+resolver = "2"
 members = [
     "crates/animation_plugin",
     "crates/attack_plugin",
     "crates/grounded_plugin",
     "crates/grounded_plugin",
     "crates/slide_system",
+    "crates/game_ui",
 ]
 
 [profile.dev.package."*"]
