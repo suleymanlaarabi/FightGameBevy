@@ -9,7 +9,7 @@ pub struct MapCollision {
     pub rect: Vec2,
 }
 
-#[derive(Deserialize, Serialize, Resource)]
+#[derive(Deserialize, Serialize)]
 pub struct MapRepresentation {
     pub image_path: String,
     pub collisions: Vec<MapCollision>,
@@ -23,3 +23,12 @@ impl MapRepresentation {
         map
     }
 }
+
+#[derive(Component)]
+pub struct MapParent;
+
+#[derive(Component)]
+pub struct WorldCollision;
+
+#[derive(Component, Default)]
+pub struct WorldSpawnRequest(pub usize);

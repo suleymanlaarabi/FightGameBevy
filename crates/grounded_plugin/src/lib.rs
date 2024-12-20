@@ -16,13 +16,13 @@ impl Plugin for CheckGroundPlugin {
 }
 
 fn check_ground(
-    query: Query<(Entity, &Parent), With<GroundDetector>>,
+    query: Query<(Entity, &Parent), (With<GroundDetector>, Without<IsGrounded>)>,
     mut commands: Commands,
-    mut collision_event_reader: EventReader<CollisionStarted>,
+    mut collision_event_reader: EventReader<Collision>,
 ) {
     for contacts in collision_event_reader.read() {
         for (child_entity, parent) in &query {
-            if child_entity == contacts.0 || child_entity == contacts.1 {
+            if child_entity == contacts.0.entity1 || child_entity == contacts.0.entity2 {
                 let parent_entity = parent.get();
                 commands.entity(parent_entity).insert(IsGrounded);
             }

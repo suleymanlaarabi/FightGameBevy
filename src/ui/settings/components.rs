@@ -5,13 +5,14 @@ fn map_card_node() -> Node {
     Node {
         height: Val::Px(160.),
         width: Val::Px(240.),
+        padding: UiRect::all(Val::Px(13.)),
         ..game_button_node()
     }
 }
 
 #[derive(Component)]
 #[require(GameButton)]
-pub struct MapCard;
+pub struct MapCard(pub usize);
 
 fn map_root_container_node() -> Node {
     Node {
@@ -33,7 +34,7 @@ impl MapContainer {
 }
 
 impl MapCard {
-    pub fn new() -> impl Bundle {
-        (MapCard, map_card_node())
+    pub fn new(id: usize) -> impl Bundle {
+        (MapCard(id), map_card_node())
     }
 }

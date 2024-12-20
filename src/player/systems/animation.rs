@@ -52,14 +52,14 @@ pub fn handle_animation(
             }
         } else if in_slide.is_some() {
             animation.set_animation(23, 26, 0.2);
-        } else if velocity.x != 0. {
+        } else if velocity.x < -130. || velocity.x > 130. {
             animation.set_animation(10, 12, 0.2);
         } else {
             animation.set_animation(0, 3, 0.2);
         }
-        if velocity.x < -115. {
+        if velocity.x < -50. {
             sprite.flip_x = true;
-        } else if velocity.x > 115. {
+        } else if velocity.x > 50. {
             sprite.flip_x = false;
         }
     }

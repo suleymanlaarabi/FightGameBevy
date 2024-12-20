@@ -45,7 +45,7 @@ impl Player {
         controll: impl Bundle,
     ) -> impl Bundle {
         (
-            Player::new(image, atlas_layout, x, 220.),
+            Player::new(image, atlas_layout, x, 350.),
             Self::base_bundle(),
             controll,
         )
