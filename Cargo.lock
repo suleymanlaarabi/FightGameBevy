@@ -1336,8 +1336,10 @@ dependencies = [
  "bincode",
  "game_ui",
  "grounded_plugin",
+ "jump_plugin",
  "rand",
  "serde",
+ "serde_json",
  "slide_system",
 ]
 
@@ -2576,6 +2578,14 @@ checksum = "6717b6b5b077764fb5966237269cb3c64edddde4b14ce42647430a78ced9e7b7"
 dependencies = [
  "once_cell",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "jump_plugin"
+version = "0.1.0"
+dependencies = [
+ "avian2d",
+ "bevy",
 ]
 
 [[package]]

@@ -57,9 +57,9 @@ pub fn handle_animation(
         } else {
             animation.set_animation(0, 3, 0.2);
         }
-        if velocity.x < -55. {
+        if velocity.x < -115. {
             sprite.flip_x = true;
-        } else if velocity.x > 55. {
+        } else if velocity.x > 115. {
             sprite.flip_x = false;
         }
     }

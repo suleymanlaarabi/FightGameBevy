@@ -6,6 +6,7 @@ mod ui;
 use game_ui::GameUiPlugin;
 use gamepad::GamePadPlayerPlugin;
 use grounded_plugin::CheckGroundPlugin;
+use jump_plugin::JumpPlugin;
 use player::PlayerPlugin;
 use resources::AppResourcePlugin;
 use setup::GameSetupPlugin;
@@ -57,6 +58,7 @@ fn main() {
             SettingsUiPlugin,
             GamePadPlayerPlugin,
         ))
+        .add_plugins(JumpPlugin)
         .insert_state(GameState::StartMenu)
         .insert_resource(Gravity::default())
         .run();

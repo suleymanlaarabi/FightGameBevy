@@ -12,9 +12,12 @@ grounded_plugin = { workspace = true }
 slide_system = { workspace = true }
 attack_plugin = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }
 rand = { workspace = true }
 bincode = { workspace = true }
 game_ui = { workspace = true }
+jump_plugin = { workspace = true }
+
 
 [workspace.dependencies]
 bevy = { version = "0.15", features = [
@@ -27,15 +30,17 @@ animation_plugin = { path = "crates/animation_plugin" }
 grounded_plugin = { path = "crates/grounded_plugin" }
 slide_system = { path = "crates/slide_system" }
 attack_plugin = { path = "crates/attack_plugin" }
+jump_plugin = { path = "crates/jump_plugin" }
 avian2d = { git = "https://github.com/Jondolf/avian", branch = "main", features = [
     "simd",
     "parallel",
     "parry-f32",
 ] }
-serde = { version = "1.0.216", features = ["derive"] }
+serde = { version = "*", features = ["derive"] }
 bincode = "*"
 rand = "*"
 game_ui = { path = "crates/game_ui" }
+serde_json = "*"
 
 [workspace]
 resolver = "2"
@@ -46,6 +51,7 @@ members = [
     "crates/grounded_plugin",
     "crates/slide_system",
     "crates/game_ui",
+    "crates/jump_plugin",
 ]
 
 [profile.dev.package."*"]

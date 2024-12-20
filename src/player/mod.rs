@@ -1,7 +1,12 @@
 use bevy::prelude::*;
 use systems::{
-    animation::PlayerAnimationPlugin, attack::PlayerAttackPlugin, boost_velocity, despawn_player,
-    fail::handle_fail, handle_jump, handle_slide, move_player, spawn_player,
+    animation::PlayerAnimationPlugin,
+    attack::PlayerAttackPlugin,
+    boost_velocity, despawn_player,
+    fail::handle_fail,
+    movement::{handle_jump, move_player},
+    slide::handle_slide,
+    spawn_player,
 };
 
 use crate::GameState;

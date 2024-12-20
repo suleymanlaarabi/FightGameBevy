@@ -33,15 +33,6 @@ pub fn mark_attack(
     }
 }
 
-fn check_contact(contacts: &CollisionStarted, entity1: Entity, entity2: Entity) -> bool {
-    if (contacts.0 == entity1 || contacts.1 == entity1)
-        && (contacts.0 == entity2 || contacts.1 == entity2)
-    {
-        return true;
-    }
-    return false;
-}
-
 pub fn detect_attack_collision(
     player_query: Query<Entity, With<Player>>,
     attack_query: Query<Entity, With<AttackSensor>>,
@@ -49,14 +40,12 @@ pub fn detect_attack_collision(
     mut commands: Commands,
 ) {
     for contacts in collision_event_reader.read() {
-        for player_entity in &player_query {
-            for attack_entity in &attack_query {
-                if check_contact(contacts, player_entity, attack_entity) {
-                    commands
-                        .entity(player_entity)
-                        .insert(AttackHitMarker::default());
-                }
-            }
+        let entities = [contacts.0, contacts.1];
+        let has_player = entities.iter().find(|&&e| player_query.get(e).is_ok());
+        let has_attack = entities.iter().find(|&&e| attack_query.get(e).is_ok());
+
+        if let (Some(&player), Some(_attack)) = (has_player, has_attack) {
+            commands.entity(player).insert(AttackHitMarker::default());
         }
     }
 }

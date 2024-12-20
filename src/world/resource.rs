@@ -3,9 +3,9 @@ use bevy::prelude::*;
 #[derive(Resource)]
 pub struct MapImg(pub Handle<Image>);
 
-impl FromWorld for MapImg {
-    fn from_world(world: &mut World) -> Self {
-        let handle = world.resource::<AssetServer>().load("map.png");
+impl MapImg {
+    pub fn from_world(world: &mut World, img_path: impl Into<String>) -> Self {
+        let handle = world.resource::<AssetServer>().load(img_path.into());
         return MapImg(handle);
     }
 }

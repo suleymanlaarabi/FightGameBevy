@@ -5,7 +5,7 @@ use slide_system::SlidingAllowed;
 
 use crate::resources::{AdventurerAtlasLayout, PlayerTileSheet};
 
-use super::components::{Controllable, Player};
+use super::components::{Controllable, Player, PlayerLife};
 
 impl Player {
     pub fn new(
@@ -21,44 +21,33 @@ impl Player {
             ..default()
         });
         let mut transform = Transform::from_scale(Vec3::splat(3.));
-        transform.translation.z = 1.;
-        transform.translation.x = x;
-        transform.translation.y = y;
+        transform.translation = Vec3::new(x, y, 1.);
         (sprite, Player::default(), transform)
+    }
+
+    pub fn base_bundle() -> impl Bundle {
+        (
+            Collider::capsule(8., 15.),
+            LockedAxes::ROTATION_LOCKED,
+            RigidBody::Dynamic,
+            GravityScale(100.),
+            LinearVelocity::ZERO,
+            Friction::new(-0.45),
+            SlidingAllowed,
+            PlayerLife(290.),
+        )
     }
 
     pub fn full(
         image: &Res<PlayerTileSheet>,
         atlas_layout: &Res<AdventurerAtlasLayout>,
         x: f32,
-        controll: Controllable,
+        controll: impl Bundle,
     ) -> impl Bundle {
         (
-            Player::new(image, atlas_layout, x, 150.),
-            Collider::capsule(8., 15.),
-            LockedAxes::ROTATION_LOCKED,
-            RigidBody::Dynamic,
-            GravityScale(100.),
-            LinearVelocity::ZERO,
-            Friction::new(-0.45),
-            SlidingAllowed,
+            Player::new(image, atlas_layout, x, 220.),
+            Self::base_bundle(),
             controll,
-        )
-    }
-    pub fn no_control(
-        image: &Res<PlayerTileSheet>,
-        atlas_layout: &Res<AdventurerAtlasLayout>,
-        x: f32,
-    ) -> impl Bundle {
-        (
-            Player::new(image, atlas_layout, x, 300.),
-            Collider::capsule(8., 15.),
-            LockedAxes::ROTATION_LOCKED,
-            RigidBody::Dynamic,
-            GravityScale(100.),
-            LinearVelocity::ZERO,
-            Friction::new(-0.45),
-            SlidingAllowed,
         )
     }
 }

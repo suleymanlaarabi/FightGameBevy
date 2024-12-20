@@ -2,62 +2,21 @@ pub mod animation;
 pub mod attack;
 pub mod attack_collision;
 pub mod fail;
+pub mod movement;
+pub mod slide;
 
 use avian2d::prelude::*;
 use bevy::prelude::*;
-use grounded_plugin::{GroundDetector, IsGrounded};
-use slide_system::{Sliding, SlidingAllowed};
+use grounded_plugin::GroundDetector;
+use slide_system::Sliding;
 
 use crate::resources::{AdventurerAtlasLayout, PlayerTileSheet};
 
-use super::components::{Controllable, Player, PlayerLife};
-
-pub const PLAYER_VELOCITY_X: f32 = 300.0;
-pub const PLAYER_JUMP_FORCE: f32 = 530.0;
-
-pub fn move_player(
-    keys: Res<ButtonInput<KeyCode>>,
-    mut query: Query<(&mut LinearVelocity, &Controllable)>,
-) {
-    for (mut velocity, controllable) in query.iter_mut() {
-        velocity.x = 0.;
-        if keys.pressed(controllable.right) {
-            velocity.x = PLAYER_VELOCITY_X;
-        } else if keys.pressed(controllable.left) {
-            velocity.x = -PLAYER_VELOCITY_X;
-        }
-    }
-}
+use super::components::{Controllable, Player};
 
 pub fn boost_velocity(mut query: Query<&mut LinearVelocity, With<Sliding>>) {
     for mut velocity in &mut query {
         velocity.x *= 1.5;
-    }
-}
-
-pub fn handle_jump(
-    mut query: Query<
-        (&mut LinearVelocity, &Controllable),
-        (With<Player>, With<IsGrounded>, With<Controllable>),
-    >,
-    keys: Res<ButtonInput<KeyCode>>,
-) {
-    for (mut velocity, controllable) in &mut query {
-        if keys.just_pressed(controllable.up) {
-            velocity.y = PLAYER_JUMP_FORCE;
-        }
-    }
-}
-
-pub fn handle_slide(
-    mut query: Query<(Entity, &Controllable), (With<SlidingAllowed>, Without<Sliding>)>,
-    keys: Res<ButtonInput<KeyCode>>,
-    mut commands: Commands,
-) {
-    for (entity, controllable) in &mut query {
-        if keys.pressed(controllable.down) {
-            commands.entity(entity).insert(Sliding::default());
-        }
     }
 }
 
@@ -82,9 +41,11 @@ pub fn spawn_player(
     atlas_layout: Res<AdventurerAtlasLayout>,
 ) {
     commands
-        .spawn((
-            Player::full(&image, &atlas_layout, -250., Controllable::default()),
-            PlayerLife(290.),
+        .spawn(Player::full(
+            &image,
+            &atlas_layout,
+            -250.,
+            Controllable::default(),
         ))
         .with_children(|parent| {
             parent.spawn(collision_detector());
