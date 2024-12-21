@@ -1,0 +1,19 @@
+{
+  "tiles": {
+    "img_path": "adventurer.png",
+    "preview": 0,
+    "col": 7,
+    "row": 11,
+    "width": 37,
+    "height": 50
+  },
+  "animation": {
+    "attack": [0, 0, 0.1],
+    "attack2": [0, 0, 0.1],
+    "top_attack": [0, 0, 0.1],
+    "movement": [0, 0, 0.1],
+    "jump": [0, 0, 0.1],
+    "fail": [0, 0, 0.1],
+    "slide": [0, 0, 0.1]
+  }
+}

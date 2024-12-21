@@ -20,12 +20,8 @@ impl Plugin for GameMenuPlugin {
         .add_systems(OnExit(GameState::InFight), (despawn_menu, despawn_life))
         .add_systems(
             Update,
-            (
-                detect_removals,
-                spawn_life
-                    .after(spawn_life_container)
-                    .run_if(in_state(GameState::InFight)),
-            ),
+            (detect_removals, spawn_life.after(spawn_life_container))
+                .run_if(in_state(GameState::InFight)),
         );
     }
 }

@@ -11,7 +11,7 @@ use player::PlayerPlugin;
 use resources::AppResourcePlugin;
 use setup::GameSetupPlugin;
 use slide_system::SlidePlugin;
-use ui::{settings::SettingsUiPlugin, CustomUiPlugin};
+use ui::{player_config::PlayerConfigUiPlugin, settings::SettingsUiPlugin, CustomUiPlugin};
 use world::WorldPlugin;
 mod player;
 mod resources;
@@ -28,6 +28,7 @@ pub enum GameState {
     StartMenu,
     InFight,
     Settings,
+    PlayerConfig,
 }
 
 fn main() {
@@ -62,7 +63,7 @@ fn main() {
             SettingsUiPlugin,
             GamePadPlayerPlugin,
         ))
-        .add_plugins(JumpPlugin)
+        .add_plugins((JumpPlugin, PlayerConfigUiPlugin))
         .insert_state(GameState::StartMenu)
         .insert_resource(Gravity::default())
         .run();

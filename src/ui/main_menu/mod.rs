@@ -34,6 +34,15 @@ fn spawn_menu(mut commands: Commands) {
             .with_children(|parent| {
                 parent.spawn(Text::new("Settings"));
             });
+        parent
+            .spawn((GameButton::with_size_func(
+                Val::Px(50.),
+                Val::Px(170.),
+                "on_click_player_config",
+            ),))
+            .with_children(|parent| {
+                parent.spawn(Text::new("PlayerConfig"));
+            });
     });
 }
 

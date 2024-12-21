@@ -19,8 +19,11 @@ impl Plugin for PlayerAttackPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(
             Update,
-            (check_attack, mark_attack, detect_attack_collision)
-                .run_if(in_state(GameState::InFight)),
+            (check_attack, detect_attack_collision).run_if(in_state(GameState::InFight)),
+        )
+        .add_systems(
+            FixedUpdate,
+            mark_attack.run_if(in_state(GameState::InFight)),
         );
     }
 }

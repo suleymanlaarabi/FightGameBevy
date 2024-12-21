@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use resource::PlayerResourcePlugin;
 use systems::{
     animation::PlayerAnimationPlugin,
     attack::PlayerAttackPlugin,
@@ -12,6 +13,8 @@ use systems::{
 use crate::GameState;
 
 pub mod components;
+pub mod player_config;
+pub mod resource;
 mod setup;
 pub mod systems;
 
@@ -19,16 +22,23 @@ pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins((PlayerAttackPlugin, PlayerAnimationPlugin))
-            .add_systems(OnEnter(GameState::InFight), spawn_player)
-            .add_systems(OnExit(GameState::InFight), despawn_player)
-            .add_systems(
-                Update,
-                (
-                    move_player.before(boost_velocity),
-                    (handle_jump, handle_slide, handle_fail, boost_velocity),
-                )
-                    .run_if(in_state(GameState::InFight)),
-            );
+        app.add_plugins((
+            PlayerAttackPlugin,
+            PlayerAnimationPlugin,
+            PlayerResourcePlugin,
+        ))
+        .add_systems(OnEnter(GameState::InFight), spawn_player)
+        .add_systems(OnExit(GameState::InFight), despawn_player)
+        .add_systems(
+            Update,
+            (
+                move_player.before(boost_velocity),
+                handle_jump,
+                handle_slide,
+                handle_fail,
+                boost_velocity,
+            )
+                .run_if(in_state(GameState::InFight)),
+        );
     }
 }

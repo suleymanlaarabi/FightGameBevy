@@ -11,6 +11,7 @@ use crate::{
 };
 pub mod game_ui;
 pub mod main_menu;
+pub mod player_config;
 pub mod settings;
 
 pub struct CustomUiPlugin;
@@ -42,6 +43,12 @@ fn insert_system(world: &mut World) {
         "on_click_play".into(),
         world.register_system(|mut state: ResMut<NextState<GameState>>| {
             state.set(GameState::InFight);
+        }),
+    );
+    map.insert(
+        "on_click_player_config".into(),
+        world.register_system(|mut state: ResMut<NextState<GameState>>| {
+            state.set(GameState::PlayerConfig);
         }),
     );
     map.insert(

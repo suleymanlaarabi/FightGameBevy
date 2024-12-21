@@ -11,12 +11,12 @@ pub struct IsGrounded;
 
 impl Plugin for CheckGroundPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, (check_ground, check_unground));
+        app.add_systems(FixedPreUpdate, (check_ground, check_unground));
     }
 }
 
 fn check_ground(
-    query: Query<(Entity, &Parent), (With<GroundDetector>, Without<IsGrounded>)>,
+    query: Query<(Entity, &Parent), With<GroundDetector>>,
     mut commands: Commands,
     mut collision_event_reader: EventReader<Collision>,
 ) {

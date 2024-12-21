@@ -14,7 +14,7 @@ pub struct SlidingAllowed;
 
 impl Default for LastSlideTime {
     fn default() -> Self {
-        Self(Timer::from_seconds(0.15, TimerMode::Once))
+        Self(Timer::from_seconds(0.2, TimerMode::Once))
     }
 }
 
@@ -32,7 +32,6 @@ impl Plugin for SlidePlugin {
                 on_sliding_insert,
                 check_ground_exit,
                 check_ground_enter,
-                on_sliding_remove,
                 during_slide,
                 during_not_slide,
             ),
@@ -43,12 +42,6 @@ impl Plugin for SlidePlugin {
 fn on_sliding_insert(mut query: Query<Entity, Added<Sliding>>, mut commands: Commands) {
     for entity in &mut query {
         commands.entity(entity).remove::<SlidingAllowed>();
-    }
-}
-
-fn on_sliding_remove(mut removals: RemovedComponents<Sliding>, mut commands: Commands) {
-    for entity in removals.read() {
-        commands.entity(entity).insert(LastSlideTime::default());
     }
 }
 

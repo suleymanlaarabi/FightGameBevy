@@ -5,13 +5,16 @@ use bevy::prelude::*;
 use grounded_plugin::IsGrounded;
 use slide_system::Sliding;
 
-use crate::player::components::Player;
+use crate::{player::components::Player, GameState};
 
 pub struct PlayerAnimationPlugin;
 
 impl Plugin for PlayerAnimationPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, handle_animation);
+        app.add_systems(
+            Update,
+            handle_animation.run_if(in_state(GameState::InFight)),
+        );
     }
 }
 
@@ -31,18 +34,10 @@ pub fn handle_animation(
     for (velocity, mut sprite, in_slide, mut animation, is_grounded, attack) in &mut query {
         if let Some(attack) = attack {
             match attack.id {
-                0 => {
-                    animation.set_animation(42, 48, 0.1);
-                }
-                1 => {
-                    animation.set_animation(42, 48, 0.1);
-                }
-                6 => {
-                    animation.set_animation(45, 48, 0.2);
-                }
-                _ => {
-                    animation.set_animation(54, 58, 0.1);
-                }
+                0 => animation.set_animation(42, 48, 0.1),
+                1 => animation.set_animation(42, 48, 0.1),
+                6 => animation.set_animation(45, 48, 0.2),
+                _ => animation.set_animation(54, 58, 0.1),
             }
         } else if !is_grounded.is_some() {
             if velocity.y > -250. {

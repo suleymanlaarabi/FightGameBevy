@@ -22,7 +22,7 @@ pub fn mark_attack(
         }
         if player_life.0 <= 0. {
             commands.entity(entity).despawn_recursive();
-            return;
+            continue;
         }
         for (life, mut node) in &mut ui_life {
             if life.0 == entity {
