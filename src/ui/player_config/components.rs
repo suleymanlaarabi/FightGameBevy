@@ -15,7 +15,7 @@ pub fn gamepad_root_container_node() -> Node {
 fn gamepad_card_node() -> Node {
     Node {
         height: Val::Px(160.),
-        width: Val::Px(240.),
+        width: Val::Px(210.),
         padding: UiRect::all(Val::Px(13.)),
         ..game_button_node()
     }

@@ -3,7 +3,10 @@ use components::{gamepad_root_container_node, GamepadCard};
 use game_ui::components::{root_game_node, GameButton, GameRootContainer};
 
 use crate::{
-    player::components::{ConnectedPlayer, Player},
+    player::{
+        components::{ConnectedPlayer, Player},
+        player_config::PlayersConfig,
+    },
     GameState,
 };
 
@@ -24,7 +27,7 @@ fn despawn_ui(mut commands: Commands, query: Query<Entity, With<GameRootContaine
     }
 }
 
-fn spawn_ui(mut commands: Commands, query: Query<&ConnectedPlayer>) {
+fn spawn_ui(mut commands: Commands, players_config: Res<PlayersConfig>) {
     commands
         .spawn((GameRootContainer, root_game_node()))
         .with_children(|parent| {
@@ -41,8 +44,18 @@ fn spawn_ui(mut commands: Commands, query: Query<&ConnectedPlayer>) {
     commands
         .spawn((GameRootContainer, gamepad_root_container_node()))
         .with_children(|parent| {
-            for (i, _) in query.iter().enumerate() {
-                parent.spawn(GamepadCard::new(i));
+            for (i, config) in players_config.0.iter().enumerate() {
+                parent.spawn((
+                    GamepadCard::new(i),
+                    ImageNode::from_atlas_image(
+                        config.image.clone(),
+                        TextureAtlas {
+                            index: config.preview as usize,
+                            layout: config.atlas.clone(),
+                            ..default()
+                        },
+                    ),
+                ));
             }
         });
 }

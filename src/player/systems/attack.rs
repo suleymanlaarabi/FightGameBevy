@@ -1,7 +1,7 @@
 use attack_plugin::Attack;
 use avian2d::prelude::Collider;
 use bevy::prelude::*;
-use rand::Rng;
+use rand::{thread_rng, Rng};
 
 use crate::{
     player::components::{Controllable, Player},
@@ -29,13 +29,11 @@ impl Plugin for PlayerAttackPlugin {
 }
 
 pub fn generate_attack(top: bool, entity: Entity, commands: &mut Commands) {
-    let mut rng = rand::thread_rng();
-    let random_number = rng.gen_range(0..=2);
     if top {
         Attack::attack_with_collision(6, 0.5, Collider::rectangle(15., 10.), commands, entity);
     } else {
         Attack::attack_with_collision(
-            random_number,
+            thread_rng().gen_range(0..=4),
             0.5,
             Collider::rectangle(50., 10.),
             commands,
