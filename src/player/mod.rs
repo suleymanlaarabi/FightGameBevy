@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use components::{ConnectedPlayer, Controllable};
 use resource::PlayerResourcePlugin;
 use systems::{
     animation::PlayerAnimationPlugin,
@@ -27,6 +28,7 @@ impl Plugin for PlayerPlugin {
             PlayerAnimationPlugin,
             PlayerResourcePlugin,
         ))
+        .add_systems(Startup, spanw_connected_player)
         .add_systems(OnEnter(GameState::InFight), spawn_player)
         .add_systems(OnExit(GameState::InFight), despawn_player)
         .add_systems(
@@ -41,4 +43,8 @@ impl Plugin for PlayerPlugin {
                 .run_if(in_state(GameState::InFight)),
         );
     }
+}
+
+fn spanw_connected_player(mut commands: Commands) {
+    commands.spawn(ConnectedPlayer::Keyboard(Controllable::default()));
 }

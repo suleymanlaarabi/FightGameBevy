@@ -56,6 +56,9 @@ impl Animation2d {
         self.indices.last = last;
         self.timer.set_duration(Duration::from_secs_f32(duration));
     }
+    pub fn set_vec_anim(&mut self, anim: Vec3) {
+        self.set_animation(anim.x as usize, anim.y as usize, anim.z);
+    }
     pub fn disable(&mut self) -> &mut Self {
         self.disabled = true;
         self

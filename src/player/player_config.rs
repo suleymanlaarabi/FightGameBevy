@@ -13,8 +13,9 @@ pub struct PlayerTiles {
     pub height: u32,
 }
 
-#[derive(Component, Deserialize, Serialize)]
+#[derive(Component, Deserialize, Serialize, Clone)]
 pub struct PlayerAnimationConfig {
+    pub idle: Vec3,
     pub attack: Vec3,
     pub attack2: Vec3,
     pub top_attack: Vec3,

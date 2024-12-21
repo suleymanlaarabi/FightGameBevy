@@ -14,7 +14,7 @@ pub struct SlidingAllowed;
 
 impl Default for LastSlideTime {
     fn default() -> Self {
-        Self(Timer::from_seconds(0.2, TimerMode::Once))
+        Self(Timer::from_seconds(0.15, TimerMode::Once))
     }
 }
 

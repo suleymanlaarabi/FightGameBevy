@@ -2,7 +2,10 @@ use bevy::prelude::*;
 use components::{gamepad_root_container_node, GamepadCard};
 use game_ui::components::{root_game_node, GameButton, GameRootContainer};
 
-use crate::GameState;
+use crate::{
+    player::components::{ConnectedPlayer, Player},
+    GameState,
+};
 
 mod components;
 
@@ -21,7 +24,7 @@ fn despawn_ui(mut commands: Commands, query: Query<Entity, With<GameRootContaine
     }
 }
 
-fn spawn_ui(mut commands: Commands, query: Query<&Gamepad>) {
+fn spawn_ui(mut commands: Commands, query: Query<&ConnectedPlayer>) {
     commands
         .spawn((GameRootContainer, root_game_node()))
         .with_children(|parent| {
@@ -41,6 +44,5 @@ fn spawn_ui(mut commands: Commands, query: Query<&Gamepad>) {
             for (i, _) in query.iter().enumerate() {
                 parent.spawn(GamepadCard::new(i));
             }
-            parent.spawn(GamepadCard::new(0));
         });
 }

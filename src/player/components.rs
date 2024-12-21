@@ -16,7 +16,7 @@ impl Default for PlayerLife {
     }
 }
 
-#[derive(Component)]
+#[derive(Component, Clone)]
 pub struct Controllable {
     pub top: KeyCode,
     pub left: KeyCode,
@@ -24,4 +24,10 @@ pub struct Controllable {
     pub up: KeyCode,
     pub down: KeyCode,
     pub hit: KeyCode,
+}
+
+#[derive(Component)]
+pub enum ConnectedPlayer {
+    Gamepad(Entity),
+    Keyboard(Controllable),
 }

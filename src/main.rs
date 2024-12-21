@@ -20,6 +20,7 @@ mod world;
 use avian2d::prelude::*;
 mod gamepad;
 mod scene;
+mod utils;
 mod wrapper;
 
 #[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]

@@ -10,9 +10,12 @@ use bevy::prelude::*;
 use grounded_plugin::GroundDetector;
 use slide_system::Sliding;
 
-use crate::resources::{AdventurerAtlasLayout, PlayerTileSheet};
+use crate::{gamepad::GamePadControlled, utils::generate_x_position};
 
-use super::components::{Controllable, Player};
+use super::{
+    components::{ConnectedPlayer, Player},
+    player_config::PlayersConfig,
+};
 
 pub fn boost_velocity(mut query: Query<&mut LinearVelocity, With<Sliding>>) {
     for mut velocity in &mut query {
@@ -37,17 +40,37 @@ pub fn collision_detector() -> impl Bundle {
 
 pub fn spawn_player(
     mut commands: Commands,
-    image: Res<PlayerTileSheet>,
-    atlas_layout: Res<AdventurerAtlasLayout>,
+    players: Query<&ConnectedPlayer>,
+    players_config: Res<PlayersConfig>,
 ) {
-    commands
-        .spawn(Player::full(
-            &image,
-            &atlas_layout,
-            -250.,
-            Controllable::default(),
-        ))
-        .with_children(|parent| {
-            parent.spawn(collision_detector());
-        });
+    let config = players_config.0.get(0).expect("No player config found");
+    for player in &players {
+        match player {
+            ConnectedPlayer::Keyboard(controll) => {
+                commands
+                    .spawn((
+                        Player::full(&config.image, &config.atlas, -250., controll.clone()),
+                        config.animation_config.clone(),
+                    ))
+                    .with_children(|parent| {
+                        parent.spawn(collision_detector());
+                    });
+            }
+            ConnectedPlayer::Gamepad(entity) => {
+                commands
+                    .spawn((
+                        Player::full(
+                            &config.image,
+                            &config.atlas,
+                            generate_x_position(),
+                            GamePadControlled(entity.clone()),
+                        ),
+                        config.animation_config.clone(),
+                    ))
+                    .with_children(|parent| {
+                        parent.spawn(collision_detector());
+                    });
+            }
+        }
+    }
 }

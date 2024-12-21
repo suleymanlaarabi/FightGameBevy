@@ -6,13 +6,12 @@ use bevy::{
 };
 use grounded_plugin::IsGrounded;
 use jump_plugin::Jump;
-use rand::{Rng, thread_rng};
+use rand::{thread_rng, Rng};
 use slide_system::{Sliding, SlidingAllowed};
 
 use crate::{
-    GameState,
     player::{
-        components::Player,
+        components::{ConnectedPlayer, Player},
         systems::{
             attack::generate_attack,
             collision_detector,
@@ -20,6 +19,7 @@ use crate::{
         },
     },
     resources::{AdventurerAtlasLayout, PlayerTileSheet},
+    GameState,
 };
 
 pub struct GamePadPlayerPlugin;
@@ -29,8 +29,7 @@ pub struct GamePadControlled(pub Entity);
 
 impl Plugin for GamePadPlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameState::InFight), spawn_first_gamepad_player)
-            .add_systems(FixedUpdate, handle_gamepad_connections)
+        app.add_systems(FixedUpdate, handle_gamepad_connections)
             .add_systems(Update, handle_gamepad_input);
     }
 }
@@ -78,38 +77,11 @@ fn handle_gamepad_input(
     }
 }
 
-fn generate_x_position() -> f32 {
-    let mut rng = thread_rng();
-    let random_number = rng.gen_range(-250..=250);
-    random_number as f32
-}
-
-fn spawn_first_gamepad_player(
-    mut commands: Commands,
-    query: Query<Entity, With<Gamepad>>,
-    image: Res<PlayerTileSheet>,
-    atlas_layout: Res<AdventurerAtlasLayout>,
-) {
-    for entity in &query {
-        commands
-            .spawn(Player::full(
-                &image,
-                &atlas_layout,
-                generate_x_position(),
-                GamePadControlled(entity),
-            ))
-            .with_children(|parent| {
-                parent.spawn(collision_detector());
-            });
-    }
-}
-
 fn handle_gamepad_connections(
     mut evr_gamepad: EventReader<GamepadEvent>,
     player_query: Query<(Entity, &GamePadControlled)>,
+    connected_query: Query<(Entity, &ConnectedPlayer)>,
     mut commands: Commands,
-    image: Res<PlayerTileSheet>,
-    atlas_layout: Res<AdventurerAtlasLayout>,
 ) {
     for evt in evr_gamepad.read() {
         let GamepadEvent::Connection(ev_conn) = evt else {
@@ -121,21 +93,22 @@ fn handle_gamepad_connections(
                 vendor_id: _,
                 product_id: _,
             } => {
-                commands
-                    .spawn(Player::full(
-                        &image,
-                        &atlas_layout,
-                        generate_x_position(),
-                        GamePadControlled(ev_conn.gamepad),
-                    ))
-                    .with_children(|parent| {
-                        parent.spawn(collision_detector());
-                    });
+                commands.spawn(ConnectedPlayer::Gamepad(ev_conn.gamepad));
             }
             GamepadConnection::Disconnected => {
                 for controlled_player in &player_query {
-                    if controlled_player.1.0 == ev_conn.gamepad {
+                    if controlled_player.1 .0 == ev_conn.gamepad {
                         commands.entity(controlled_player.0).despawn_recursive();
+                    }
+                }
+                for (connected_player_entity, connected_player) in &connected_query {
+                    match connected_player {
+                        ConnectedPlayer::Gamepad(entity) => {
+                            if entity == &ev_conn.gamepad {
+                                commands.entity(connected_player_entity).despawn();
+                            }
+                        }
+                        _ => {}
                     }
                 }
             }

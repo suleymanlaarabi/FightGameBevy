@@ -9,15 +9,15 @@ use super::components::{Controllable, Player, PlayerLife};
 
 impl Player {
     pub fn new(
-        image: &Res<PlayerTileSheet>,
-        atlas_layout: &Res<AdventurerAtlasLayout>,
+        image: &Handle<Image>,
+        atlas_layout: &Handle<TextureAtlasLayout>,
         x: f32,
         y: f32,
     ) -> impl Bundle {
-        let mut sprite = Sprite::from_image(image.0.clone());
+        let mut sprite = Sprite::from_image(image.clone());
         sprite.texture_atlas = Some(TextureAtlas {
             index: 0,
-            layout: atlas_layout.0.clone(),
+            layout: atlas_layout.clone(),
             ..default()
         });
         let mut transform = Transform::from_scale(Vec3::splat(3.));
@@ -39,8 +39,8 @@ impl Player {
     }
 
     pub fn full(
-        image: &Res<PlayerTileSheet>,
-        atlas_layout: &Res<AdventurerAtlasLayout>,
+        image: &Handle<Image>,
+        atlas_layout: &Handle<TextureAtlasLayout>,
         x: f32,
         controll: impl Bundle,
     ) -> impl Bundle {
