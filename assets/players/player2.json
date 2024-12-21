@@ -1,0 +1,23 @@
+{
+  "tiles": {
+    "img_path": "player_default.png",
+    "preview": 0,
+    "col": 8,
+    "row": 7,
+    "width": 56,
+    "height": 56,
+    "collider_offset": [0, -10],
+    "collider_size": [8, 15],
+    "ground_x": -26
+  },
+  "animation": {
+    "idle": [0, 5, 0.13],
+    "attack": [8, 14, 0.1],
+    "attack2": [8, 14, 0.1],
+    "top_attack": [45, 48, 0.2],
+    "movement": [16, 23, 0.1],
+    "jump": [24, 30, 0.2],
+    "fail": [30, 34, 0.2],
+    "slide": [23, 26, 0.2]
+  }
+}

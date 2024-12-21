@@ -53,7 +53,7 @@ members = [
     "crates/grounded_plugin",
     "crates/slide_system",
     "crates/game_ui",
-    "crates/jump_plugin",
+    "crates/jump_plugin", "crates/config_plugin",
 ]
 
 [profile.dev.package."*"]

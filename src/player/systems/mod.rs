@@ -7,7 +7,6 @@ pub mod slide;
 
 use avian2d::prelude::*;
 use bevy::prelude::*;
-use grounded_plugin::GroundDetector;
 use slide_system::Sliding;
 
 use crate::{gamepad::GamePadControlled, utils::generate_x_position};
@@ -15,6 +14,7 @@ use crate::{gamepad::GamePadControlled, utils::generate_x_position};
 use super::{
     components::{ConnectedPlayer, Player},
     player_config::PlayersConfig,
+    setup::collision_detector,
 };
 
 pub fn boost_velocity(mut query: Query<&mut LinearVelocity, With<Sliding>>) {
@@ -27,15 +27,6 @@ pub fn despawn_player(query: Query<Entity, With<Player>>, mut commands: Commands
     for entity in &query {
         commands.entity(entity).despawn_recursive();
     }
-}
-
-pub fn collision_detector() -> impl Bundle {
-    (
-        Collider::rectangle(10., 3.),
-        Sensor,
-        Transform::from_xyz(0., -15., 0.),
-        GroundDetector,
-    )
 }
 
 pub fn spawn_player(
@@ -53,7 +44,16 @@ pub fn spawn_player(
                         config.animation_config.clone(),
                     ))
                     .with_children(|parent| {
-                        parent.spawn(collision_detector());
+                        parent.spawn(collision_detector(config.ground_x));
+                        parent.spawn((
+                            Collider::capsule(config.collider_size.x, config.collider_size.y),
+                            Transform::from_xyz(
+                                config.collider_offset.x,
+                                config.collider_offset.y,
+                                0.,
+                            ),
+                            GlobalTransform::default(),
+                        ));
                     });
             }
             ConnectedPlayer::Gamepad(entity) => {
@@ -68,7 +68,16 @@ pub fn spawn_player(
                         config.animation_config.clone(),
                     ))
                     .with_children(|parent| {
-                        parent.spawn(collision_detector());
+                        parent.spawn(collision_detector(config.ground_x));
+                        parent.spawn((
+                            Collider::capsule(config.collider_size.x, config.collider_size.y),
+                            Transform::from_xyz(
+                                config.collider_offset.x,
+                                config.collider_offset.y,
+                                0.,
+                            ),
+                            GlobalTransform::default(),
+                        ));
                     });
             }
         }

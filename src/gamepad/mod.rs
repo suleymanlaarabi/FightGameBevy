@@ -6,20 +6,14 @@ use bevy::{
 };
 use grounded_plugin::IsGrounded;
 use jump_plugin::Jump;
-use rand::{thread_rng, Rng};
 use slide_system::{Sliding, SlidingAllowed};
 
-use crate::{
-    player::{
-        components::{ConnectedPlayer, Player},
-        systems::{
-            attack::generate_attack,
-            collision_detector,
-            movement::{PLAYER_JUMP_FORCE, PLAYER_VELOCITY_X},
-        },
+use crate::player::{
+    components::ConnectedPlayer,
+    systems::{
+        attack::generate_attack,
+        movement::{PLAYER_JUMP_FORCE, PLAYER_VELOCITY_X},
     },
-    resources::{AdventurerAtlasLayout, PlayerTileSheet},
-    GameState,
 };
 
 pub struct GamePadPlayerPlugin;

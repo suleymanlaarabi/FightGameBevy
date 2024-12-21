@@ -11,6 +11,9 @@ pub struct PlayerTiles {
     pub row: u32,
     pub width: u32,
     pub height: u32,
+    pub collider_offset: Vec2,
+    pub collider_size: Vec2,
+    pub ground_x: f32,
 }
 
 #[derive(Component, Deserialize, Serialize, Clone)]
@@ -39,6 +42,9 @@ pub struct PlayerConfig {
     pub image: Handle<Image>,
     pub preview: u32,
     pub animation_config: PlayerAnimationConfig,
+    pub collider_offset: Vec2,
+    pub collider_size: Vec2,
+    pub ground_x: f32,
 }
 
 impl PlayerConfig {
@@ -59,6 +65,9 @@ impl PlayerConfig {
             image,
             preview: config.tiles.preview,
             animation_config: config.animation,
+            collider_size: config.tiles.collider_size,
+            collider_offset: config.tiles.collider_offset,
+            ground_x: config.tiles.ground_x,
         }
     }
 }

@@ -50,7 +50,7 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
             PhysicsPlugins::default(),
-            //PhysicsDebugPlugin::default(),
+            PhysicsDebugPlugin::default(),
             CustomAnimationPlugin,
             AttackPlugin,
             CheckGroundPlugin,

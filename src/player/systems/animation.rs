@@ -6,8 +6,8 @@ use grounded_plugin::IsGrounded;
 use slide_system::Sliding;
 
 use crate::{
-    player::{components::Player, player_config::PlayerAnimationConfig},
     GameState,
+    player::{components::Player, player_config::PlayerAnimationConfig},
 };
 
 pub struct PlayerAnimationPlugin;
@@ -44,7 +44,7 @@ pub fn handle_animation(
                 _ => animation.set_vec_anim(config.attack2),
             }
         } else if !is_grounded.is_some() {
-            if velocity.y > -250. {
+            if velocity.y > -150. {
                 animation.set_vec_anim(config.jump);
             } else {
                 animation.set_vec_anim(config.fail);

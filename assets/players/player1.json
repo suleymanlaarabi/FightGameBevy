@@ -5,7 +5,10 @@
     "col": 7,
     "row": 11,
     "width": 37,
-    "height": 50
+    "height": 50,
+    "collider_offset": [0, 0],
+    "collider_size": [8, 15],
+    "ground_x": -15
   },
   "animation": {
     "idle": [0, 3, 0.2],

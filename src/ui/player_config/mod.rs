@@ -2,13 +2,7 @@ use bevy::prelude::*;
 use components::{gamepad_root_container_node, GamepadCard};
 use game_ui::components::{root_game_node, GameButton, GameRootContainer};
 
-use crate::{
-    player::{
-        components::{ConnectedPlayer, Player},
-        player_config::PlayersConfig,
-    },
-    GameState,
-};
+use crate::{player::player_config::PlayersConfig, GameState};
 
 mod components;
 

@@ -1,9 +1,7 @@
 use avian2d::prelude::*;
 use bevy::prelude::*;
-//use collision_trigger::CollisionCible;
+use grounded_plugin::GroundDetector;
 use slide_system::SlidingAllowed;
-
-use crate::resources::{AdventurerAtlasLayout, PlayerTileSheet};
 
 use super::components::{Controllable, Player, PlayerLife};
 
@@ -26,8 +24,8 @@ impl Player {
     }
 
     pub fn base_bundle() -> impl Bundle {
-        (
-            Collider::capsule(8., 15.),
+        return (
+            GlobalTransform::default(),
             LockedAxes::ROTATION_LOCKED,
             RigidBody::Dynamic,
             GravityScale(100.),
@@ -35,7 +33,7 @@ impl Player {
             Friction::new(-0.45),
             SlidingAllowed,
             PlayerLife(290.),
-        )
+        );
     }
 
     pub fn full(
@@ -83,4 +81,13 @@ impl Default for Controllable {
             KeyCode::KeyW,
         )
     }
+}
+
+pub fn collision_detector(offset: f32) -> impl Bundle {
+    (
+        Collider::rectangle(10., 9.),
+        Sensor,
+        Transform::from_xyz(0., offset, 0.),
+        GroundDetector,
+    )
 }
