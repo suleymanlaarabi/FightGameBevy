@@ -4,23 +4,20 @@ use avian2d::PhysicsPlugins;
 use bevy::prelude::*;
 mod ui;
 use game_ui::GameUiPlugin;
-use gamepad::GamePadPlayerPlugin;
 use grounded_plugin::CheckGroundPlugin;
 use jump_plugin::JumpPlugin;
-use player::PlayerPlugin;
-use resources::AppResourcePlugin;
+use player_animation_plugin::PlayerAnimationPlugin;
+use player_attack_plugin::PlayerAttackPlugin;
+use player_gamepad_plugin::GamePadPlayerPlugin;
+use player_plugin::PlayerPlugin;
 use setup::GameSetupPlugin;
 use slide_system::SlidePlugin;
 use ui::{player_config::PlayerConfigUiPlugin, settings::SettingsUiPlugin, CustomUiPlugin};
 use world::WorldPlugin;
-mod player;
-mod resources;
 mod setup;
 mod world;
 use avian2d::prelude::*;
-mod gamepad;
 mod scene;
-mod utils;
 mod wrapper;
 
 #[derive(States, Default, Debug, Clone, PartialEq, Eq, Hash)]
@@ -50,12 +47,10 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
             PhysicsPlugins::default(),
-            PhysicsDebugPlugin::default(),
+            //PhysicsDebugPlugin::default(),
             CustomAnimationPlugin,
             AttackPlugin,
             CheckGroundPlugin,
-            AppResourcePlugin,
-            PlayerPlugin,
             GameSetupPlugin,
             WorldPlugin,
             SlidePlugin,
@@ -64,7 +59,19 @@ fn main() {
             SettingsUiPlugin,
             GamePadPlayerPlugin,
         ))
-        .add_plugins((JumpPlugin, PlayerConfigUiPlugin))
+        .add_plugins((
+            JumpPlugin,
+            PlayerConfigUiPlugin,
+            PlayerPlugin {
+                state: GameState::InFight,
+            },
+            PlayerAnimationPlugin {
+                need_state: Some(GameState::InFight),
+            },
+            PlayerAttackPlugin {
+                need_state: Some(GameState::InFight),
+            },
+        ))
         .insert_state(GameState::StartMenu)
         .insert_resource(Gravity::default())
         .run();

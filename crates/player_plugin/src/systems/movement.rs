@@ -1,9 +1,10 @@
 use avian2d::prelude::LinearVelocity;
 use bevy::prelude::*;
+use controll_plugin::Controllable;
 use grounded_plugin::IsGrounded;
 use jump_plugin::Jump;
 
-use crate::player::components::{Controllable, Player};
+use crate::components::Player;
 
 pub const PLAYER_VELOCITY_X: f32 = 300.0;
 pub const PLAYER_JUMP_FORCE: f32 = 530.0;

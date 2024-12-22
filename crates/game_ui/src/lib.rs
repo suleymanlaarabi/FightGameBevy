@@ -3,7 +3,9 @@ use std::collections::HashMap;
 use bevy::{ecs::system::SystemId, prelude::*};
 use components::GameButtonPlugin;
 
+pub mod builder;
 pub mod components;
+pub mod styles;
 mod systems;
 
 pub struct GameUiPlugin;

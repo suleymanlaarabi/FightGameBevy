@@ -1,0 +1,15 @@
+[package]
+name = "player_gamepad_plugin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { workspace = true }
+grounded_plugin = { workspace = true }
+jump_plugin = { workspace = true }
+player_attack_plugin = { workspace = true }
+player_plugin = { workspace = true }
+slide_system = { workspace = true }
+avian2d = { workspace = true }
+attack_plugin = { workspace = true }
+controll_plugin = { workspace = true }

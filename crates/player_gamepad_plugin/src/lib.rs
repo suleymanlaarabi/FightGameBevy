@@ -4,22 +4,14 @@ use bevy::{
     input::gamepad::{GamepadConnection, GamepadEvent},
     prelude::*,
 };
+use controll_plugin::{ConnectedControll, GamepadControlled};
 use grounded_plugin::IsGrounded;
 use jump_plugin::Jump;
+use player_attack_plugin::generate_attack;
+use player_plugin::systems::movement::{PLAYER_JUMP_FORCE, PLAYER_VELOCITY_X};
 use slide_system::{Sliding, SlidingAllowed};
 
-use crate::player::{
-    components::ConnectedPlayer,
-    systems::{
-        attack::generate_attack,
-        movement::{PLAYER_JUMP_FORCE, PLAYER_VELOCITY_X},
-    },
-};
-
 pub struct GamePadPlayerPlugin;
-
-#[derive(Component)]
-pub struct GamePadControlled(pub Entity);
 
 impl Plugin for GamePadPlayerPlugin {
     fn build(&self, app: &mut App) {
@@ -33,7 +25,7 @@ fn handle_gamepad_input(
     mut player_query: Query<(
         Entity,
         &mut LinearVelocity,
-        &GamePadControlled,
+        &GamepadControlled,
         Option<&Attack>,
         Option<&IsGrounded>,
         Option<&SlidingAllowed>,
@@ -73,8 +65,8 @@ fn handle_gamepad_input(
 
 fn handle_gamepad_connections(
     mut evr_gamepad: EventReader<GamepadEvent>,
-    player_query: Query<(Entity, &GamePadControlled)>,
-    connected_query: Query<(Entity, &ConnectedPlayer)>,
+    player_query: Query<(Entity, &GamepadControlled)>,
+    connected_query: Query<(Entity, &ConnectedControll)>,
     mut commands: Commands,
 ) {
     for evt in evr_gamepad.read() {
@@ -87,17 +79,17 @@ fn handle_gamepad_connections(
                 vendor_id: _,
                 product_id: _,
             } => {
-                commands.spawn(ConnectedPlayer::Gamepad(ev_conn.gamepad));
+                commands.spawn(ConnectedControll::Gamepad(ev_conn.gamepad));
             }
             GamepadConnection::Disconnected => {
                 for controlled_player in &player_query {
-                    if controlled_player.1 .0 == ev_conn.gamepad {
+                    if controlled_player.1.0 == ev_conn.gamepad {
                         commands.entity(controlled_player.0).despawn_recursive();
                     }
                 }
                 for (connected_player_entity, connected_player) in &connected_query {
                     match connected_player {
-                        ConnectedPlayer::Gamepad(entity) => {
+                        ConnectedControll::Gamepad(entity) => {
                             if entity == &ev_conn.gamepad {
                                 commands.entity(connected_player_entity).despawn();
                             }

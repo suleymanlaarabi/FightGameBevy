@@ -1335,9 +1335,14 @@ dependencies = [
  "bevy",
  "bevy_dylib",
  "bincode",
+ "controll_plugin",
  "game_ui",
  "grounded_plugin",
  "jump_plugin",
+ "player_animation_plugin",
+ "player_attack_plugin",
+ "player_gamepad_plugin",
+ "player_plugin",
  "rand",
  "serde",
  "serde_json",
@@ -1683,6 +1688,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e1aaf9b65849a68662ac6c0810c8893a765c960b907dd7cfab9c4a50bf764fbc"
 dependencies = [
  "const_soft_float",
+]
+
+[[package]]
+name = "controll_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
 ]
 
 [[package]]
@@ -3609,6 +3621,71 @@ name = "pkg-config"
 version = "0.3.31"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
+
+[[package]]
+name = "player_animation_plugin"
+version = "0.1.0"
+dependencies = [
+ "animation_plugin",
+ "attack_plugin",
+ "avian2d",
+ "bevy",
+ "grounded_plugin",
+ "player_plugin",
+ "slide_system",
+]
+
+[[package]]
+name = "player_attack_plugin"
+version = "0.1.0"
+dependencies = [
+ "attack_plugin",
+ "avian2d",
+ "bevy",
+ "controll_plugin",
+ "player_plugin",
+ "rand",
+]
+
+[[package]]
+name = "player_config_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "player_gamepad_plugin"
+version = "0.1.0"
+dependencies = [
+ "attack_plugin",
+ "avian2d",
+ "bevy",
+ "controll_plugin",
+ "grounded_plugin",
+ "jump_plugin",
+ "player_attack_plugin",
+ "player_plugin",
+ "slide_system",
+]
+
+[[package]]
+name = "player_plugin"
+version = "0.1.0"
+dependencies = [
+ "animation_plugin",
+ "avian2d",
+ "bevy",
+ "controll_plugin",
+ "grounded_plugin",
+ "jump_plugin",
+ "rand",
+ "serde",
+ "serde_json",
+ "slide_system",
+]
 
 [[package]]
 name = "png"

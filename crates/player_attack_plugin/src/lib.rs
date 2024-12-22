@@ -1,30 +1,23 @@
 use attack_plugin::Attack;
 use avian2d::prelude::Collider;
 use bevy::prelude::*;
-use rand::{thread_rng, Rng};
+use controll_plugin::Controllable;
+use player_plugin::components::Player;
+use rand::{Rng, thread_rng};
+pub mod attack_collision;
+use attack_collision::detect_attack_collision;
+pub struct PlayerAttackPlugin<S: States> {
+    pub need_state: Option<S>,
+}
 
-use crate::{
-    player::components::{Controllable, Player},
-    GameState,
-};
-
-use super::attack_collision::{detect_attack_collision, mark_attack};
-
-pub struct PlayerAttackPlugin;
-
-#[derive(Component, Default)]
-pub struct AttackHitMarker(pub Option<f32>);
-
-impl Plugin for PlayerAttackPlugin {
+impl<S: States> Plugin for PlayerAttackPlugin<S> {
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            Update,
-            (check_attack, detect_attack_collision).run_if(in_state(GameState::InFight)),
-        )
-        .add_systems(
-            FixedUpdate,
-            mark_attack.run_if(in_state(GameState::InFight)),
-        );
+        let systems_update = (check_attack, detect_attack_collision);
+        if let Some(state) = &self.need_state {
+            app.add_systems(Update, systems_update.run_if(in_state(state.clone())));
+        } else {
+            app.add_systems(Update, (check_attack, detect_attack_collision));
+        }
     }
 }
 

@@ -1,10 +1,12 @@
 use bevy::prelude::*;
-use slide_system::{Sliding, SlidingAllowed};
-
-use crate::player::components::Controllable;
+use controll_plugin::Controllable;
+use slide_system::{SlideDetector, Sliding, SlidingAllowed};
 
 pub fn handle_slide(
-    mut query: Query<(Entity, &Controllable), (With<SlidingAllowed>, Without<Sliding>)>,
+    mut query: Query<
+        (Entity, &Controllable),
+        (With<SlidingAllowed>, Without<Sliding>, With<SlideDetector>),
+    >,
     keys: Res<ButtonInput<KeyCode>>,
     mut commands: Commands,
 ) {

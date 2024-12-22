@@ -1,8 +1,12 @@
 use bevy::prelude::*;
-use components::{gamepad_root_container_node, GamepadCard};
-use game_ui::components::{root_game_node, GameButton, GameRootContainer};
+use components::gamepad_root_container_node;
+use game_ui::{
+    builder::NodeBuilder,
+    components::{root_game_node, GameButton, GameRootContainer},
+};
+use player_plugin::components::config::PlayersConfig;
 
-use crate::{player::player_config::PlayersConfig, GameState};
+use crate::GameState;
 
 mod components;
 
@@ -38,9 +42,11 @@ fn spawn_ui(mut commands: Commands, players_config: Res<PlayersConfig>) {
     commands
         .spawn((GameRootContainer, gamepad_root_container_node()))
         .with_children(|parent| {
-            for (i, config) in players_config.0.iter().enumerate() {
+            for (_, config) in players_config.0.iter().enumerate() {
                 parent.spawn((
-                    GamepadCard::new(i),
+                    NodeBuilder::from_min_height(150.).build(),
+                    GameButton::default(),
+                    BorderRadius::all(Val::Px(10.)),
                     ImageNode::from_atlas_image(
                         config.image.clone(),
                         TextureAtlas {

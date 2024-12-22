@@ -32,6 +32,12 @@ pub struct PlayerAnimationConfig {
 pub struct PlayerSpriteConfig {
     pub tiles: PlayerTiles,
     pub animation: PlayerAnimationConfig,
+    pub features: PlayerConfigFeatures,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct PlayerConfigFeatures {
+    pub slide: bool,
 }
 
 #[derive(Resource)]
@@ -45,6 +51,7 @@ pub struct PlayerConfig {
     pub collider_offset: Vec2,
     pub collider_size: Vec2,
     pub ground_x: f32,
+    pub features: PlayerConfigFeatures,
 }
 
 impl PlayerConfig {
@@ -68,6 +75,7 @@ impl PlayerConfig {
             collider_size: config.tiles.collider_size,
             collider_offset: config.tiles.collider_offset,
             ground_x: config.tiles.ground_x,
+            features: config.features,
         }
     }
 }

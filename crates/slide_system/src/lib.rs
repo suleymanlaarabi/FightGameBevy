@@ -12,6 +12,9 @@ struct LastSlideTime(Timer);
 #[derive(Component)]
 pub struct SlidingAllowed;
 
+#[derive(Component)]
+pub struct SlideDetector;
+
 impl Default for LastSlideTime {
     fn default() -> Self {
         Self(Timer::from_seconds(0.1, TimerMode::Once))
@@ -73,7 +76,14 @@ fn during_slide(mut query: Query<(Entity, &mut Sliding)>, mut commands: Commands
 }
 
 fn check_ground_exit(
-    query: Query<Entity, (With<SlidingAllowed>, Without<IsGrounded>)>,
+    query: Query<
+        Entity,
+        (
+            With<SlidingAllowed>,
+            Without<IsGrounded>,
+            With<SlideDetector>,
+        ),
+    >,
     mut commands: Commands,
 ) {
     for entity in &query {
@@ -83,7 +93,14 @@ fn check_ground_exit(
 }
 
 fn check_ground_enter(
-    mut query: Query<(Entity, &LastSlideTime), (Without<SlidingAllowed>, With<IsGrounded>)>,
+    mut query: Query<
+        (Entity, &LastSlideTime),
+        (
+            Without<SlidingAllowed>,
+            With<IsGrounded>,
+            With<SlideDetector>,
+        ),
+    >,
     mut commands: Commands,
 ) {
     for (entity, time) in &mut query {

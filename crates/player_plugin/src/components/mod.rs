@@ -1,9 +1,31 @@
+pub mod config;
+use animation_plugin::Animation2d;
 use avian2d::prelude::*;
 use bevy::prelude::*;
+use config::PlayerConfig;
 use grounded_plugin::GroundDetector;
-use slide_system::SlidingAllowed;
+use slide_system::{SlideDetector, SlidingAllowed};
 
-use super::components::{Controllable, Player, PlayerLife};
+#[derive(Component, Default)]
+#[require(Sprite)]
+pub struct Player;
+
+#[derive(Component)]
+pub struct PlayerLife(pub f32);
+
+#[derive(Component)]
+pub struct PlayerDamage(pub f32);
+
+#[derive(Component)]
+pub struct PlayerCollision;
+
+impl Default for PlayerLife {
+    fn default() -> Self {
+        Self(100.)
+    }
+}
+
+// IMPLEMENTATION
 
 impl Player {
     pub fn new(
@@ -31,8 +53,8 @@ impl Player {
             GravityScale(100.),
             LinearVelocity::ZERO,
             Friction::new(-0.45),
-            SlidingAllowed,
             PlayerLife(290.),
+            Animation2d::new(0.2, 0, 3),
         );
     }
 
@@ -41,44 +63,13 @@ impl Player {
         atlas_layout: &Handle<TextureAtlasLayout>,
         x: f32,
         controll: impl Bundle,
+        features: impl Bundle,
     ) -> impl Bundle {
         (
             Player::new(image, atlas_layout, x, 350.),
             Self::base_bundle(),
             controll,
-        )
-    }
-}
-
-impl Controllable {
-    pub fn new(
-        left: KeyCode,
-        right: KeyCode,
-        up: KeyCode,
-        down: KeyCode,
-        hit: KeyCode,
-        top: KeyCode,
-    ) -> Self {
-        Self {
-            left,
-            right,
-            up,
-            down,
-            hit,
-            top,
-        }
-    }
-}
-
-impl Default for Controllable {
-    fn default() -> Self {
-        Self::new(
-            KeyCode::KeyA,
-            KeyCode::KeyD,
-            KeyCode::Space,
-            KeyCode::ShiftLeft,
-            KeyCode::KeyX,
-            KeyCode::KeyW,
+            features,
         )
     }
 }
@@ -90,4 +81,28 @@ pub fn collision_detector(offset: f32) -> impl Bundle {
         Transform::from_xyz(0., offset, 0.),
         GroundDetector,
     )
+}
+
+pub fn spawn_player(commands: &mut Commands, config: &PlayerConfig, controll: impl Bundle) {
+    commands
+        .spawn((
+            Player::full(
+                &config.image,
+                &config.atlas,
+                -250.,
+                controll,
+                SlidingAllowed,
+            ),
+            config.animation_config.clone(),
+        ))
+        .insert_if((SlidingAllowed, SlideDetector), || config.features.slide)
+        .with_children(|parent| {
+            parent.spawn(collision_detector(config.ground_x));
+            parent.spawn((
+                Collider::capsule(config.collider_size.x, config.collider_size.y),
+                Transform::from_xyz(config.collider_offset.x, config.collider_offset.y, 0.),
+                GlobalTransform::default(),
+                PlayerCollision,
+            ));
+        });
 }

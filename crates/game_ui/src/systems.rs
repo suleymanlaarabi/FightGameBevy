@@ -1,22 +1,33 @@
-use bevy::prelude::*;
+use bevy::{
+    prelude::*,
+    window::{PrimaryWindow, SystemCursorIcon},
+    winit::cursor::CursorIcon,
+};
 
 use crate::{
     ButtonMapSystems,
     components::{GameButton, GameButtonClicked, HOVERED_BUTTON, NORMAL_BUTTON},
 };
 
+const CURSOR_POINTER: CursorIcon = CursorIcon::System(SystemCursorIcon::Pointer);
+const DEFAULT_CURSOR: CursorIcon = CursorIcon::System(SystemCursorIcon::Default);
+
 pub fn flappy_button_interaction(
     mut interaction_query: Query<
         (Entity, &GameButton, &Interaction, &mut BackgroundColor),
         Changed<Interaction>,
     >,
+    mut q_windows: Query<Entity, With<PrimaryWindow>>,
     map: Res<ButtonMapSystems>,
     mut commands: Commands,
 ) {
+    let primary_window = q_windows.single_mut();
+
     for (entity, button, interaction, mut background_color) in &mut interaction_query {
         match *interaction {
             Interaction::Hovered => {
                 background_color.0 = HOVERED_BUTTON;
+                commands.entity(primary_window).insert(CURSOR_POINTER);
             }
             Interaction::Pressed => {
                 commands.entity(entity).insert(GameButtonClicked);
@@ -26,6 +37,7 @@ pub fn flappy_button_interaction(
                 }
             }
             _ => {
+                commands.entity(primary_window).insert(DEFAULT_CURSOR);
                 background_color.0 = NORMAL_BUTTON;
             }
         }

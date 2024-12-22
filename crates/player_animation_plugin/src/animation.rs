@@ -3,23 +3,8 @@ use attack_plugin::Attack;
 use avian2d::prelude::LinearVelocity;
 use bevy::prelude::*;
 use grounded_plugin::IsGrounded;
+use player_plugin::components::{Player, config::PlayerAnimationConfig};
 use slide_system::Sliding;
-
-use crate::{
-    GameState,
-    player::{components::Player, player_config::PlayerAnimationConfig},
-};
-
-pub struct PlayerAnimationPlugin;
-
-impl Plugin for PlayerAnimationPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_systems(
-            Update,
-            handle_animation.run_if(in_state(GameState::InFight)),
-        );
-    }
-}
 
 pub fn handle_animation(
     mut query: Query<

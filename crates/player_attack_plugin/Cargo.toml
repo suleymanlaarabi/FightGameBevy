@@ -1,0 +1,12 @@
+[package]
+name = "player_attack_plugin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { workspace = true }
+avian2d = { workspace = true }
+player_plugin = { workspace = true }
+attack_plugin = { workspace = true }
+rand = { workspace = true }
+controll_plugin = { workspace = true }

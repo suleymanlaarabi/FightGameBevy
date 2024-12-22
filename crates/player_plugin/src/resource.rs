@@ -2,7 +2,7 @@ use std::fs::read_dir;
 
 use bevy::prelude::*;
 
-use super::player_config::{PlayerConfig, PlayerSpriteConfig, PlayersConfig};
+use crate::components::config::{PlayerConfig, PlayerSpriteConfig, PlayersConfig};
 
 pub struct PlayerResourcePlugin;
 

@@ -1,13 +1,13 @@
 use bevy::prelude::*;
 use components::{PlayerLifeUi, PlayerLifeUiProgress};
 use game_ui::components::{root_game_node, GameButton, GameRootContainer};
+use player_plugin::components::{Player, PlayerLife};
+use systems::sync_player_life_and_ui;
 
 pub mod components;
+mod systems;
 
-use crate::{
-    player::components::{Player, PlayerLife},
-    GameState,
-};
+use crate::GameState;
 
 pub struct GameMenuPlugin;
 
@@ -22,6 +22,10 @@ impl Plugin for GameMenuPlugin {
             Update,
             (detect_removals, spawn_life.after(spawn_life_container))
                 .run_if(in_state(GameState::InFight)),
+        )
+        .add_systems(
+            FixedUpdate,
+            sync_player_life_and_ui.run_if(in_state(GameState::InFight)),
         );
     }
 }
