@@ -14,4 +14,5 @@ animation_plugin = { workspace = true }
 jump_plugin = { workspace = true }
 controll_plugin = { workspace = true }
 rand = { workspace = true }
+config_plugin = { workspace = true }
 # player_attack_plugin = { workspace = true }

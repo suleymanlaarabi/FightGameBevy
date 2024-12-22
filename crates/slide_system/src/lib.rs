@@ -20,7 +20,7 @@ pub struct SlideDetector;
 
 impl Default for LastSlideTime {
     fn default() -> Self {
-        Self(Timer::from_seconds(0.1, TimerMode::Once))
+        Self(Timer::from_seconds(0.4, TimerMode::Once))
     }
 }
 

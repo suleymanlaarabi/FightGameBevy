@@ -2,7 +2,7 @@ pub mod config;
 use animation_plugin::Animation2d;
 use avian2d::prelude::*;
 use bevy::prelude::*;
-use config::PlayerConfig;
+use config_plugin::game_component::PlayerConfig;
 use grounded_plugin::GroundDetector;
 use slide_system::{SlideDetector, SlidingAllowed};
 
@@ -26,7 +26,6 @@ impl Default for PlayerLife {
 }
 
 // IMPLEMENTATION
-
 impl Player {
     pub fn new(
         image: &Handle<Image>,
@@ -47,7 +46,6 @@ impl Player {
 
     pub fn base_bundle() -> impl Bundle {
         return (
-            GlobalTransform::default(),
             LockedAxes::ROTATION_LOCKED,
             RigidBody::Dynamic,
             GravityScale(100.),
@@ -86,23 +84,17 @@ pub fn collision_detector(offset: f32) -> impl Bundle {
 pub fn spawn_player(commands: &mut Commands, config: &PlayerConfig, controll: impl Bundle) {
     commands
         .spawn((
-            Player::full(
-                &config.image,
-                &config.atlas,
-                -250.,
-                controll,
-                SlidingAllowed,
-            ),
+            Player::full(&config.image, &config.atlas, -250., controll, ()),
             config.animation_config.clone(),
+            config.clone(),
         ))
         .insert_if((SlidingAllowed, SlideDetector), || config.features.slide)
         .with_children(|parent| {
             parent.spawn(collision_detector(config.ground_x));
             parent.spawn((
                 Collider::capsule(config.collider_size.x, config.collider_size.y),
-                Transform::from_xyz(config.collider_offset.x, config.collider_offset.y, 0.),
-                GlobalTransform::default(),
                 PlayerCollision,
+                Transform::from_xyz(config.collider_offset.x, config.collider_offset.y, 0.),
             ));
         });
 }

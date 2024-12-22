@@ -5,7 +5,10 @@ use game_ui::components::{root_game_node, GameButton, GameButtonClicked, GameRoo
 mod components;
 
 use crate::{
-    world::{component::WorldSpawnRequest, WorldMaps},
+    world::{
+        component::{SelectedWorld, WorldSpawnRequest},
+        WorldMaps,
+    },
     GameState,
 };
 
@@ -19,12 +22,17 @@ impl Plugin for SettingsUiPlugin {
     }
 }
 
-fn on_clicked(query: Query<(Entity, &MapCard), With<GameButtonClicked>>, mut commands: Commands) {
+fn on_clicked(
+    query: Query<(Entity, &MapCard), With<GameButtonClicked>>,
+    mut commands: Commands,
+    mut selected_world: ResMut<SelectedWorld>,
+) {
     let mut spawned = false;
     for (entity, map) in &query {
         if !spawned {
             commands.spawn(WorldSpawnRequest(map.0));
             spawned = true;
+            selected_world.0 = map.0;
         }
         commands.entity(entity).remove::<GameButtonClicked>();
     }

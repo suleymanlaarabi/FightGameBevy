@@ -4,6 +4,7 @@ use bevy::{
     input::gamepad::{GamepadConnection, GamepadEvent},
     prelude::*,
 };
+use config_plugin::game_component::PlayerConfig;
 use controll_plugin::{ConnectedControll, GamepadControlled};
 use grounded_plugin::IsGrounded;
 use jump_plugin::Jump;
@@ -29,11 +30,19 @@ fn handle_gamepad_input(
         Option<&Attack>,
         Option<&IsGrounded>,
         Option<&SlidingAllowed>,
+        &PlayerConfig,
     )>,
     mut commands: Commands,
 ) {
-    for (player_entity, mut velocity, gamepad_controll, attack, grounded, sliding_allowed) in
-        &mut player_query
+    for (
+        player_entity,
+        mut velocity,
+        gamepad_controll,
+        attack,
+        grounded,
+        sliding_allowed,
+        config,
+    ) in &mut player_query
     {
         velocity.x = 0.;
         for (entity, gamepad) in &gamepads {
@@ -55,6 +64,7 @@ fn handle_gamepad_input(
                     generate_attack(
                         gamepad.pressed(GamepadButton::DPadUp),
                         player_entity,
+                        config,
                         &mut commands,
                     );
                 }

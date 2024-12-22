@@ -2,8 +2,9 @@ use animation_plugin::Animation2d;
 use attack_plugin::Attack;
 use avian2d::prelude::LinearVelocity;
 use bevy::prelude::*;
+use config_plugin::game_component::PlayerConfig;
 use grounded_plugin::IsGrounded;
-use player_plugin::components::{Player, config::PlayerAnimationConfig};
+use player_plugin::components::Player;
 use slide_system::Sliding;
 
 pub fn handle_animation(
@@ -15,12 +16,13 @@ pub fn handle_animation(
             &mut Animation2d,
             Option<&IsGrounded>,
             Option<&Attack>,
-            &PlayerAnimationConfig,
+            &PlayerConfig,
         ),
         With<Player>,
     >,
 ) {
     for (velocity, mut sprite, in_slide, mut animation, is_grounded, attack, config) in &mut query {
+        let config = &config.animation_config;
         if let Some(attack) = attack {
             match attack.id {
                 0 => animation.set_vec_anim(config.attack),

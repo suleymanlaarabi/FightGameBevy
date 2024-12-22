@@ -1,6 +1,5 @@
 use animation_plugin::CustomAnimationPlugin;
 use attack_plugin::AttackPlugin;
-use avian2d::PhysicsPlugins;
 use bevy::prelude::*;
 mod ui;
 use game_ui::GameUiPlugin;
@@ -73,6 +72,5 @@ fn main() {
             },
         ))
         .insert_state(GameState::StartMenu)
-        .insert_resource(Gravity::default())
         .run();
 }

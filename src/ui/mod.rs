@@ -6,7 +6,10 @@ use game_ui::GameMenuPlugin;
 use main_menu::MainMenuPlugin;
 
 use crate::{
-    world::{component::WorldSpawnRequest, WorldMaps},
+    world::{
+        component::{SelectedWorld, WorldSpawnRequest},
+        WorldMaps,
+    },
     GameState,
 };
 pub mod game_ui;
@@ -54,10 +57,11 @@ fn insert_system(world: &mut World) {
     map.insert(
         "refresh_maps".into(),
         world.register_system(|world: &mut World| {
+            let selected_world = world.resource::<SelectedWorld>().0;
             let new = WorldMaps::from_world(world);
             let mut res = world.resource_mut::<WorldMaps>();
             res.0 = new.0;
-            world.spawn(WorldSpawnRequest(0));
+            world.spawn(WorldSpawnRequest(selected_world));
         }),
     );
     world.insert_resource(map);

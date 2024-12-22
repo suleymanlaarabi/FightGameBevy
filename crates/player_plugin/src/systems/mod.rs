@@ -6,14 +6,11 @@ pub mod slide;
 use avian2d::prelude::*;
 use bevy::prelude::*;
 
+use config_plugin::{game_component::PlayerConfig, resource_insertion::PlayersConfig};
 use controll_plugin::{ConnectedControll, GamepadControlled};
 use slide_system::Sliding;
 
-use crate::components::{
-    Player,
-    config::{PlayerConfig, PlayersConfig},
-    spawn_player,
-};
+use crate::components::{Player, spawn_player};
 
 pub fn boost_velocity(mut query: Query<&mut LinearVelocity, With<Sliding>>) {
     for mut velocity in &mut query {

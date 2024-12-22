@@ -13,3 +13,4 @@ slide_system = { workspace = true }
 avian2d = { workspace = true }
 attack_plugin = { workspace = true }
 controll_plugin = { workspace = true }
+config_plugin = { workspace = true }

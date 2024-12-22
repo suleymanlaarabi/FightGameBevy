@@ -32,3 +32,6 @@ pub struct WorldCollision;
 
 #[derive(Component, Default)]
 pub struct WorldSpawnRequest(pub usize);
+
+#[derive(Resource)]
+pub struct SelectedWorld(pub usize);

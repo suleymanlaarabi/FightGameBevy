@@ -1,7 +1,7 @@
 use std::fs::read_dir;
 
 use bevy::prelude::*;
-use component::{MapCollision, MapRepresentation};
+use component::{MapCollision, MapRepresentation, SelectedWorld};
 use systems::{spawn_world, world_spawn_handle};
 
 pub mod component;
@@ -31,6 +31,7 @@ impl FromWorld for WorldMaps {
 
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
+        app.insert_resource(SelectedWorld(0));
         let world = app.world_mut();
         let maps = WorldMaps::from_world(world);
         app.insert_resource(maps);

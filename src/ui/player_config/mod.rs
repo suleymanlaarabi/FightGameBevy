@@ -1,11 +1,11 @@
 use bevy::prelude::*;
 use components::{gamepad_root_container_node, PlayerConfigApplyButton};
+use config_plugin::resource_insertion::PlayersConfig;
 use controll_plugin::ConnectedControll;
 use game_ui::{
     builder::NodeBuilder,
     components::{root_game_node, GameButton, GameRootContainer, NORMAL_BUTTON},
 };
-use player_plugin::components::config::PlayersConfig;
 use systems::on_player_config_select;
 
 use crate::GameState;

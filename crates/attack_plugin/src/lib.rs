@@ -25,8 +25,9 @@ impl Attack {
         zone: Collider,
         commands: &mut Commands,
         entity: Entity,
+        y: f32,
     ) -> impl Bundle {
-        let mut transform = Transform::from_xyz(0., 0., 0.);
+        let mut transform = Transform::from_xyz(0., y, 0.);
         if id == 6 {
             transform.translation.y += 15.;
         }

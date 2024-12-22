@@ -22,6 +22,7 @@ player_animation_plugin = { workspace = true }
 player_attack_plugin = { workspace = true }
 player_gamepad_plugin = { workspace = true }
 controll_plugin = { workspace = true }
+config_plugin = { workspace = true }
 
 [workspace.dependencies]
 bevy = { version = "*", features = [
@@ -42,17 +43,13 @@ player_animation_plugin = { path = "crates/player_animation_plugin" }
 player_attack_plugin = { path = "crates/player_attack_plugin" }
 player_gamepad_plugin = { path = "crates/player_gamepad_plugin" }
 controll_plugin = { path = "crates/controll_plugin" }
-avian2d = { git = "https://github.com/Jondolf/avian", branch = "main", features = [
-    "simd",
-    "parallel",
-    "parry-f32",
-] }
+avian2d = { version = "*", features = ["simd", "parallel", "parry-f32"] }
 serde = { version = "*", features = ["derive"] }
 bincode = "*"
 rand = "*"
 game_ui = { path = "crates/game_ui" }
 serde_json = "*"
-
+config_plugin = { path = "crates/config_plugin" }
 
 [workspace]
 resolver = "2"
@@ -68,9 +65,9 @@ members = [
     "crates/player_animation_plugin",
     "crates/player_plugin",
     "crates/player_attack_plugin",
-    "crates/player_config_plugin",
     "crates/player_gamepad_plugin",
     "crates/controll_plugin",
+    "crates/config_plugin",
 ]
 
 [profile.dev.package."*"]
