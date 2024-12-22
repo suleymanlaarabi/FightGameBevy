@@ -6,6 +6,7 @@ use player_plugin::components::Player;
 use rand::{Rng, thread_rng};
 pub mod attack_collision;
 use attack_collision::detect_attack_collision;
+
 pub struct PlayerAttackPlugin<S: States> {
     pub need_state: Option<S>,
 }

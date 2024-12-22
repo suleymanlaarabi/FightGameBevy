@@ -4,12 +4,15 @@ use grounded_plugin::IsGrounded;
 pub struct SlidePlugin;
 
 #[derive(Component, Deref, DerefMut)]
+#[component(storage = "SparseSet")]
 pub struct Sliding(Timer);
 
 #[derive(Component, Deref, DerefMut)]
+#[component(storage = "SparseSet")]
 struct LastSlideTime(Timer);
 
 #[derive(Component)]
+#[component(storage = "SparseSet")]
 pub struct SlidingAllowed;
 
 #[derive(Component)]

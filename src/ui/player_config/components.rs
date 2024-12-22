@@ -11,3 +11,6 @@ pub fn gamepad_root_container_node() -> Node {
         ..root_container_node()
     }
 }
+
+#[derive(Component)]
+pub struct PlayerConfigApplyButton(pub Entity, pub usize);

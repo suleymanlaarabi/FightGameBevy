@@ -2,6 +2,7 @@ use avian2d::prelude::*;
 use bevy::prelude::*;
 
 #[derive(Component)]
+#[component(storage = "SparseSet")]
 pub struct Jump(pub f32);
 
 pub struct JumpPlugin;

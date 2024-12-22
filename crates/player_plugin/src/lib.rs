@@ -12,7 +12,7 @@ use systems::{
     fail::handle_fail,
     movement::{handle_jump, move_player},
     slide::handle_slide,
-    spawn_new_player_system, spawn_player_system,
+    spawn_player_system,
 };
 
 pub struct PlayerPlugin<S: States> {
@@ -27,7 +27,7 @@ impl<S: States> Plugin for PlayerPlugin<S> {
             .add_systems(OnExit(self.state.clone()), despawn_player)
             .add_systems(
                 FixedUpdate,
-                (apply_damage, spawn_new_player_system).run_if(in_state(self.state.clone())),
+                (apply_damage).run_if(in_state(self.state.clone())),
             )
             .add_systems(
                 Update,

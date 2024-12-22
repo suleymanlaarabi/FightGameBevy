@@ -7,6 +7,7 @@ pub struct CheckGroundPlugin;
 pub struct GroundDetector;
 
 #[derive(Component)]
+#[component(storage = "SparseSet")]
 pub struct IsGrounded;
 
 impl Plugin for CheckGroundPlugin {

@@ -35,7 +35,7 @@ pub struct PlayerSpriteConfig {
     pub features: PlayerConfigFeatures,
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Clone)]
 pub struct PlayerConfigFeatures {
     pub slide: bool,
 }
@@ -43,6 +43,7 @@ pub struct PlayerConfigFeatures {
 #[derive(Resource)]
 pub struct PlayersConfig(pub Vec<PlayerConfig>);
 
+#[derive(Component, Clone)]
 pub struct PlayerConfig {
     pub atlas: Handle<TextureAtlasLayout>,
     pub image: Handle<Image>,
