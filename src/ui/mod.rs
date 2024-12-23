@@ -55,13 +55,19 @@ fn insert_system(world: &mut World) {
         }),
     );
     map.insert(
+        "on_click_playground_view".into(),
+        world.register_system(|mut state: ResMut<NextState<GameState>>| {
+            state.set(GameState::TestPlayGround);
+        }),
+    );
+    map.insert(
         "refresh_maps".into(),
         world.register_system(|world: &mut World| {
             let selected_world = world.resource::<SelectedWorld>().0;
             let new = WorldMaps::from_world(world);
             let mut res = world.resource_mut::<WorldMaps>();
             res.0 = new.0;
-            world.spawn(WorldSpawnRequest(selected_world));
+            world.spawn(WorldSpawnRequest(selected_world as isize));
         }),
     );
     world.insert_resource(map);

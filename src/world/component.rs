@@ -12,6 +12,7 @@ pub struct MapCollision {
 #[derive(Deserialize, Serialize)]
 pub struct MapRepresentation {
     pub image_path: String,
+    pub music_path: Option<String>,
     pub collisions: Vec<MapCollision>,
 }
 
@@ -31,7 +32,7 @@ pub struct MapParent;
 pub struct WorldCollision;
 
 #[derive(Component, Default)]
-pub struct WorldSpawnRequest(pub usize);
+pub struct WorldSpawnRequest(pub isize);
 
 #[derive(Resource)]
 pub struct SelectedWorld(pub usize);

@@ -9,7 +9,11 @@ mod systems;
 
 pub struct WorldPlugin;
 
-pub type WorldMap = (Handle<Image>, Vec<MapCollision>);
+pub type WorldMap = (
+    Handle<Image>,
+    Option<Handle<AudioSource>>,
+    Vec<MapCollision>,
+);
 
 #[derive(Deref, DerefMut, Resource, TypePath, Asset)]
 pub struct WorldMaps(pub Vec<WorldMap>);
@@ -22,8 +26,14 @@ impl FromWorld for WorldMaps {
             let entry = entry.expect("error file in maps dir");
             let path = entry.path();
             let map = MapRepresentation::from_file(path.to_str().unwrap());
-            let handle: Handle<Image> = world.resource::<AssetServer>().load(map.image_path);
-            maps.push((handle, map.collisions));
+            let server: &AssetServer = world.resource::<AssetServer>();
+            let handle_image: Handle<Image> = server.load(map.image_path);
+            if let Some(music_path) = map.music_path {
+                let handle_audio: Handle<AudioSource> = server.load(music_path);
+                maps.push((handle_image, Some(handle_audio), map.collisions));
+            } else {
+                maps.push((handle_image, None, map.collisions));
+            }
         }
         maps
     }

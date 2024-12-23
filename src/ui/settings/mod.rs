@@ -30,7 +30,7 @@ fn on_clicked(
     let mut spawned = false;
     for (entity, map) in &query {
         if !spawned {
-            commands.spawn(WorldSpawnRequest(map.0));
+            commands.spawn(WorldSpawnRequest(map.0 as isize));
             spawned = true;
             selected_world.0 = map.0;
         }

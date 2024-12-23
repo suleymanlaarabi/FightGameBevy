@@ -23,6 +23,9 @@ player_attack_plugin = { workspace = true }
 player_gamepad_plugin = { workspace = true }
 controll_plugin = { workspace = true }
 config_plugin = { workspace = true }
+bullet_plugin = { workspace = true }
+gun_plugin = { workspace = true }
+one_shot_system = { workspace = true }
 
 [workspace.dependencies]
 bevy = { version = "*", features = [
@@ -31,6 +34,8 @@ bevy = { version = "*", features = [
     "dynamic_linking",
     "file_watcher",
     "embedded_watcher",
+    "bevy_audio",
+    "mp3",
 ] }
 bevy_dylib = "*"
 animation_plugin = { path = "crates/animation_plugin" }
@@ -50,6 +55,9 @@ rand = "*"
 game_ui = { path = "crates/game_ui" }
 serde_json = "*"
 config_plugin = { path = "crates/config_plugin" }
+bullet_plugin = { path = "crates/bullet_plugin" }
+gun_plugin = { path = "crates/gun_plugin" }
+one_shot_system = { path = "crates/one_shot_system" }
 
 [workspace]
 resolver = "2"
@@ -68,6 +76,9 @@ members = [
     "crates/player_gamepad_plugin",
     "crates/controll_plugin",
     "crates/config_plugin",
+    "crates/bullet_plugin",
+    "crates/gun_plugin",
+    "crates/one_shot_system",
 ]
 
 [profile.dev.package."*"]

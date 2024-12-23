@@ -8,6 +8,7 @@ pub struct Controllable {
     pub up: KeyCode,
     pub down: KeyCode,
     pub hit: KeyCode,
+    pub fire: KeyCode,
 }
 
 #[derive(Component)]
@@ -27,6 +28,7 @@ impl Controllable {
         down: KeyCode,
         hit: KeyCode,
         top: KeyCode,
+        fire: KeyCode,
     ) -> Self {
         Self {
             left,
@@ -35,6 +37,7 @@ impl Controllable {
             down,
             hit,
             top,
+            fire,
         }
     }
 }
@@ -48,6 +51,7 @@ impl Default for Controllable {
             KeyCode::ShiftLeft,
             KeyCode::KeyX,
             KeyCode::KeyW,
+            KeyCode::KeyJ,
         )
     }
 }

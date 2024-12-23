@@ -1,5 +1,6 @@
 {
   "image_path": "map2.png",
+  "music_path": "music/music.mp3",
   "collisions": [
     {
       "position": [0.0, 195.0],

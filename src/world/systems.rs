@@ -25,11 +25,18 @@ pub fn world_spawn_handle(
         for entity in &query_collisions {
             commands.entity(entity).despawn();
         }
+        if request.0 < 0 {
+            return;
+        }
         // SPAWN NEW MAP
-        let img = &maps[request.0].0;
-        let collisions = &maps[request.0].1;
-        commands.spawn((Sprite::from_image(img.clone()), MapParent));
-
+        let id = request.0 as usize;
+        let img = &maps[id].0;
+        let collisions = &maps[id].2;
+        let audio = &maps[id].1;
+        let mut command = commands.spawn((Sprite::from_image(img.clone()), MapParent));
+        if let Some(audio) = audio {
+            command.insert(AudioPlayer::new(audio.clone()));
+        }
         for collision in collisions {
             commands.spawn((
                 RigidBody::Static,
