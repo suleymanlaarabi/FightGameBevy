@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use systems::schedule_gun;
 
 pub mod components;
-mod systems;
+pub mod systems;
 
 pub struct GameGunPlugin;
 

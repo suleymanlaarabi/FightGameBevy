@@ -1348,6 +1348,7 @@ dependencies = [
  "player_animation_plugin",
  "player_attack_plugin",
  "player_gamepad_plugin",
+ "player_gun_plugin",
  "player_plugin",
  "rand",
  "serde",
@@ -3705,6 +3706,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "player_gun_plugin"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bullet_plugin",
+ "controll_plugin",
+ "gun_plugin",
+ "player_plugin",
+]
+
+[[package]]
 name = "player_plugin"
 version = "0.1.0"
 dependencies = [
@@ -3714,6 +3726,7 @@ dependencies = [
  "config_plugin",
  "controll_plugin",
  "grounded_plugin",
+ "gun_plugin",
  "jump_plugin",
  "rand",
  "serde",

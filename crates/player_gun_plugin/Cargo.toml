@@ -1,0 +1,11 @@
+[package]
+name = "player_gun_plugin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { workspace = true }
+bullet_plugin = { workspace = true }
+gun_plugin = { workspace = true }
+player_plugin = { workspace = true }
+controll_plugin = { workspace = true }

@@ -4,6 +4,7 @@ use avian2d::prelude::*;
 use bevy::prelude::*;
 use config_plugin::game_component::PlayerConfig;
 use grounded_plugin::GroundDetector;
+use gun_plugin::components::Gun;
 use slide_system::{SlideDetector, SlidingAllowed};
 
 #[derive(Component, Default)]
@@ -87,6 +88,7 @@ pub fn spawn_player(commands: &mut Commands, config: &PlayerConfig, controll: im
             Player::full(&config.image, &config.atlas, -250., controll, ()),
             config.animation_config.clone(),
             config.clone(),
+            Gun { frequency: 0.4 },
         ))
         .insert_if((SlidingAllowed, SlideDetector), || config.features.slide)
         .with_children(|parent| {

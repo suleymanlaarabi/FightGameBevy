@@ -26,6 +26,7 @@ config_plugin = { workspace = true }
 bullet_plugin = { workspace = true }
 gun_plugin = { workspace = true }
 one_shot_system = { workspace = true }
+player_gun_plugin = { workspace = true }
 
 [workspace.dependencies]
 bevy = { version = "*", features = [
@@ -58,6 +59,7 @@ config_plugin = { path = "crates/config_plugin" }
 bullet_plugin = { path = "crates/bullet_plugin" }
 gun_plugin = { path = "crates/gun_plugin" }
 one_shot_system = { path = "crates/one_shot_system" }
+player_gun_plugin = { path = "crates/player_gun_plugin" }
 
 [workspace]
 resolver = "2"
@@ -79,6 +81,7 @@ members = [
     "crates/bullet_plugin",
     "crates/gun_plugin",
     "crates/one_shot_system",
+    "crates/player_gun_plugin",
 ]
 
 [profile.dev.package."*"]

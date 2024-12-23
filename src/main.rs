@@ -2,13 +2,16 @@ use animation_plugin::CustomAnimationPlugin;
 use attack_plugin::AttackPlugin;
 use bevy::prelude::*;
 mod ui;
+use bullet_plugin::BulletPlugin;
 use game_ui::GameUiPlugin;
 use grounded_plugin::CheckGroundPlugin;
+use gun_plugin::GameGunPlugin;
 use jump_plugin::JumpPlugin;
 use one_shot_system::register_one_shot_system;
 use player_animation_plugin::PlayerAnimationPlugin;
 use player_attack_plugin::PlayerAttackPlugin;
 use player_gamepad_plugin::GamePadPlayerPlugin;
+use player_gun_plugin::PlayerGunPlugin;
 use player_plugin::PlayerPlugin;
 use setup::GameSetupPlugin;
 use slide_system::SlidePlugin;
@@ -76,6 +79,11 @@ fn main() {
         PlayerAttackPlugin {
             need_state: Some(GameState::InFight),
         },
+    ))
+    .add_plugins((
+        BulletPlugin::<GameState>::default(),
+        GameGunPlugin,
+        PlayerGunPlugin,
     ))
     .insert_state(GameState::StartMenu)
     .run();

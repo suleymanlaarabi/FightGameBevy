@@ -7,7 +7,7 @@ pub struct Gun {
 }
 
 #[derive(Component, Deref, DerefMut)]
-pub struct LastFireTime(Timer);
+pub struct LastFireTime(pub Timer);
 
 #[derive(Component, Default)]
 pub struct GunFireAllowed;
