@@ -30,6 +30,7 @@ pub fn spawn_player_system(
     players_config: Res<PlayersConfig>,
 ) {
     let config = players_config.0.get(1).expect("No player config found");
+
     for (player, player_config) in &players {
         match player {
             ConnectedControll::Keyboard(controll) => {

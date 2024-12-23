@@ -1,7 +1,5 @@
 use bevy::prelude::*;
 
-use crate::systems::flappy_button_interaction;
-
 pub const NORMAL_BUTTON: Color = Color::srgba(0.65, 0.65, 0.65, 0.5);
 pub const HOVERED_BUTTON: Color = Color::srgba(0.75, 0.75, 0.75, 0.6);
 
@@ -72,11 +70,3 @@ pub struct GameRootContainer;
 
 #[derive(Component)]
 pub struct GameButtonClicked;
-
-pub struct GameButtonPlugin;
-
-impl Plugin for GameButtonPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_systems(Update, flappy_button_interaction);
-    }
-}
