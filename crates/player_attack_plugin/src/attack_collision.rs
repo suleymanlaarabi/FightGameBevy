@@ -1,7 +1,7 @@
 use attack_plugin::AttackSensor;
 use avian2d::prelude::*;
 use bevy::prelude::*;
-use player_plugin::components::{PlayerCollision, PlayerDamage};
+use player_plugin::components::{PlayerCollision, PlayerDamage, PlayerRepulse};
 
 pub fn detect_attack_collision(
     player_query: Query<(Entity, &Parent), With<PlayerCollision>>,
@@ -16,7 +16,9 @@ pub fn detect_attack_collision(
 
         if let (Some(&player_child), Some(&_)) = (has_player, has_attack) {
             if let Ok((_, parent)) = player_query.get(player_child) {
-                commands.entity(parent.get()).insert(PlayerDamage(90.));
+                commands
+                    .entity(parent.get())
+                    .insert((PlayerDamage(90.), PlayerRepulse(10., 0.)));
             }
         }
     }

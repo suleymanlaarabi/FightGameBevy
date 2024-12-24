@@ -12,10 +12,16 @@ use slide_system::{SlideDetector, SlidingAllowed};
 pub struct Player;
 
 #[derive(Component)]
+#[component(storage = "SparseSet")]
 pub struct PlayerLife(pub f32);
 
 #[derive(Component)]
+#[component(storage = "SparseSet")]
 pub struct PlayerDamage(pub f32);
+
+#[derive(Component)]
+#[component(storage = "SparseSet")]
+pub struct PlayerRepulse(pub f32, pub f32);
 
 #[derive(Component)]
 pub struct PlayerCollision;

@@ -1,6 +1,7 @@
 pub mod damage;
 pub mod fail;
 pub mod movement;
+pub mod repulse;
 pub mod slide;
 
 use avian2d::prelude::*;

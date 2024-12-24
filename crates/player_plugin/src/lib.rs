@@ -11,6 +11,7 @@ use systems::{
     despawn_player,
     fail::handle_fail,
     movement::{handle_jump, move_player},
+    repulse::apply_player_repulse,
     slide::handle_slide,
     spawn_player_system,
 };
@@ -27,7 +28,7 @@ impl<S: States> Plugin for PlayerPlugin<S> {
             .add_systems(OnExit(self.state.clone()), despawn_player)
             .add_systems(
                 FixedUpdate,
-                (apply_damage).run_if(in_state(self.state.clone())),
+                (apply_damage, apply_player_repulse).run_if(in_state(self.state.clone())),
             )
             .add_systems(
                 Update,
