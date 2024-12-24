@@ -4,7 +4,7 @@ use bevy::{
     input::gamepad::{GamepadConnection, GamepadEvent},
     prelude::*,
 };
-use config_plugin::game_component::PlayerConfig;
+use config_plugin::player::PlayerConfig;
 use controll_plugin::{ConnectedControll, GamepadControlled};
 use grounded_plugin::IsGrounded;
 use jump_plugin::Jump;

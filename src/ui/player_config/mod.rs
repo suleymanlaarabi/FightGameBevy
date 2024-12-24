@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use components::{gamepad_root_container_node, PlayerConfigApplyButton};
-use config_plugin::resource_insertion::PlayersConfig;
+use config_plugin::player::PlayersConfig;
 use controll_plugin::ConnectedControll;
 use game_ui::{
     builder::NodeBuilder,

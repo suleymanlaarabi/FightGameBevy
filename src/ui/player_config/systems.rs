@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use config_plugin::resource_insertion::PlayersConfig;
+use config_plugin::player::PlayersConfig;
 
 use super::components::PlayerConfigApplyButton;
 use game_ui::components::GameButtonClicked;

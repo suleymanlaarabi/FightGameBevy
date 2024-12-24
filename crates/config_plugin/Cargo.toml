@@ -7,3 +7,4 @@ edition = "2024"
 bevy = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
+gun_plugin = { workspace = true }

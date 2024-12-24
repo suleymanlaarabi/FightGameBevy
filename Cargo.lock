@@ -1638,6 +1638,7 @@ name = "config_plugin"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "gun_plugin",
  "serde",
  "serde_json",
 ]

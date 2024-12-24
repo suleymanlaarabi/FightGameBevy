@@ -6,7 +6,7 @@ pub mod slide;
 use avian2d::prelude::*;
 use bevy::prelude::*;
 
-use config_plugin::{game_component::PlayerConfig, resource_insertion::PlayersConfig};
+use config_plugin::{player::PlayerConfig, player::PlayersConfig};
 use controll_plugin::{ConnectedControll, GamepadControlled};
 use slide_system::Sliding;
 

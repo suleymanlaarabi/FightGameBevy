@@ -2,7 +2,7 @@ use animation_plugin::Animation2d;
 use attack_plugin::Attack;
 use avian2d::prelude::LinearVelocity;
 use bevy::prelude::*;
-use config_plugin::game_component::PlayerConfig;
+use config_plugin::player::PlayerConfig;
 use grounded_plugin::IsGrounded;
 use player_plugin::components::Player;
 use slide_system::Sliding;

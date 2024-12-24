@@ -1,7 +1,7 @@
 use attack_plugin::Attack;
 use avian2d::prelude::Collider;
 use bevy::prelude::*;
-use config_plugin::game_component::PlayerConfig;
+use config_plugin::player::PlayerConfig;
 use controll_plugin::Controllable;
 use player_plugin::components::Player;
 use rand::{Rng, thread_rng};
